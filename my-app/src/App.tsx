@@ -3,6 +3,7 @@ import { createClient, Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import LoginPage from "./pages/LoginPage";
+import Main from "./pages/Main";
 
 export const supabase = createClient(
   "https://kmsaywphzhkstdkvzisx.supabase.co",
@@ -29,7 +30,7 @@ function App() {
   if (!session) {
     return <LoginPage />;
   } else {
-    return <div>Logged in!</div>;
+    return <Main user={session.user} />;
   }
 }
 

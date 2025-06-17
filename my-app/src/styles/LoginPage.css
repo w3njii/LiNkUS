@@ -1,0 +1,42 @@
+.linkus {
+    text-align: center;
+}
+
+.box {
+    width: 350px;
+    border: 3px solid black;
+    padding: 30px;
+}
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+}
+
+.auth button {
+    border-radius: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    height: 35px;
+}
+
+.auth button:hover {
+    background-color: rgb(220, 210, 190) !important;
+}
+  
+.auth input {
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    height: 35px;
+    padding: 5px;
+}
+
+.auth .sbui-auth-view {
+    gap: 12px !important;
+}
+
+.auth .sbui-divider {
+    margin-top: 8px !important; 
+    margin-bottom: 8px !important;
+}
