@@ -1,8 +1,7 @@
 import { Session } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
 import { supabase } from "../App";
 import "../styles/Main.css";
-import LogoutButton from "../components/LogoutButton";
+import SideBar from "../components/SideBar";
 
 interface MainProps {
   user: Session["user"];
@@ -21,7 +20,7 @@ function Main({ user }: MainProps) {
   return (
     <div className="main-content">
       <div className="sidebar-container">
-        <p>Sidebar Placeholder</p>
+        <SideBar />
       </div>
       <div className="center-container">
         <p>Center Placeholder</p>
