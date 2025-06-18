@@ -1,15 +1,14 @@
 import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { supabase } from "../App";
+import "../styles/Main.css";
+import LogoutButton from "../components/LogoutButton";
 
 interface MainProps {
   user: Session["user"];
 }
 
 const handleLogout = async () => {
-  const confirm = window.confirm("Are you sure you want to log out?");
-  if (!confirm) return;
-
   const { error } = await supabase.auth.signOut();
   if (error) {
     console.error("Error logging out:", error.message);
@@ -19,14 +18,19 @@ const handleLogout = async () => {
 };
 
 function Main({ user }: MainProps) {
-
   return (
-    <div>
-      <button id="logout" onClick={handleLogout}>
-        Logout
-      </button>
-      <div>
-        hello there 
+    <div className="main-content">
+      <div className="sidebar-container">
+        <p>Sidebar Placeholder</p>
+      </div>
+      <div className="center-container">
+        <p>Center Placeholder</p>
+        <div className="events-container">
+          <div className="box1">1</div>
+        </div>
+      </div>
+      <div className="discover-container">
+        <p>Discover Placeholder</p>
       </div>
     </div>
   );

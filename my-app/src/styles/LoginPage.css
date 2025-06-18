@@ -1,18 +1,20 @@
-.linkus {
+.login-text {
     text-align: center;
+    padding-bottom: 10px;
 }
 
 .box {
-    width: 350px;
+    min-width: 350px;
     border: 3px solid black;
     padding: 30px;
+    border-radius: 7px;
 }
 
 .login-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 85vh;
+    height: 95vh;
 }
 
 .auth button {
@@ -22,7 +24,7 @@
 }
 
 .auth button:hover {
-    background-color: rgb(220, 210, 190) !important;
+    background-color: rgb(225, 199, 170) !important;
 }
   
 .auth input {
@@ -36,7 +38,17 @@
     gap: 12px !important;
 }
 
-.auth .sbui-divider {
-    margin-top: 8px !important; 
-    margin-bottom: 8px !important;
+.auth .supabase-auth-ui_ui-divider {
+    height: 0px;
+}
+
+.logo {
+    max-width: 300px;
+    padding-right: 190px;
+}
+
+@media screen and (max-width:900px) {
+    .logo {
+        display: none;
+    }
 }
