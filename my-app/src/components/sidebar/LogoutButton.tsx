@@ -1,5 +1,5 @@
-import { supabase } from "../App";
-import "../styles/LogoutButton.css";
+import { supabase } from "../../App";
+import "../../styles/components/sidebar/LogoutButton.css";
 
 const handleLogout = async () => {
   const { error } = await supabase.auth.signOut();
@@ -13,7 +13,7 @@ const handleLogout = async () => {
 function LogoutButton() {
   return (
     <button className="logout" onClick={handleLogout}>
-      Logout
+      Log out
     </button>
   );
 }

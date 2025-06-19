@@ -1,0 +1,23 @@
+.sidebar-button {
+    display: flex;
+    gap: 15px;
+    font-weight: 570;
+    justify-content: left;
+    align-items: center;
+    background-color: rgb(241, 226, 205);
+    text-align: center;
+    cursor: pointer;
+    width: 90%;
+    height: 45px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    padding-left: 15px;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-button:hover{
+    background-color: rgb(228, 204, 175);
+}

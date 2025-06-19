@@ -1,7 +1,7 @@
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../App";
 import "../styles/Main.css";
-import SideBar from "../components/SideBar";
+import SideBar from "../components/sidebar/SideBar";
 
 interface MainProps {
   user: Session["user"];
