@@ -1,9 +1,9 @@
-import { IoNotifications } from "react-icons/io5";
+import { FaRegBell } from "react-icons/fa6";
 
 function NotificationsButton({ className }: { className?: string }) {
   return (
     <button className={className}>
-      <IoNotifications size={25} />
+      <FaRegBell size={24} />
       Notifications
     </button>
   );

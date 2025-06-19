@@ -23,10 +23,10 @@ function Main({ user }: MainProps) {
         <SideBar />
       </div>
       <div className="center-container">
-        <p>Center Placeholder</p>
         <div className="events-container">
           <div className="box1">1</div>
         </div>
+
       </div>
       <div className="discover-container">
         <p>Discover Placeholder</p>

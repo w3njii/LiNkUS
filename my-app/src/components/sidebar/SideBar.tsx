@@ -1,23 +1,17 @@
+import UserAvatar from "../user/UserAvatar";
 import HomeButton from "./HomeButton";
 import SearchButton from "./SearchButton";
 import MessagesButton from "./MessagesButton";
 import NotificationsButton from "./NotificationsButton";
 import LogoutButton from "./LogoutButton";
-import ButtonStyles from "../../styles/components/sidebar/SidebarButtons.module.css"
+import ButtonStyles from "../../styles/components/sidebar/SidebarButtons.module.css";
 import "../../styles/components/sidebar/SideBar.css";
-
 
 function SideBar() {
   return (
     <div className="buttons-container">
-      <div className="logo-container">
-        <a href="App.tsx">
-          <img
-            src="/images/linkus_logo_transparent.png"
-            alt="linkus logo"
-            className="logo"
-          />
-        </a>
+      <div className="profile-container">
+        <UserAvatar />
       </div>
       <div className="navigation-buttons">
         <HomeButton className={ButtonStyles["sidebar-button"]} />

@@ -8,7 +8,7 @@
     flex-direction: column;
     width: 15%;
     text-align: center;
-    border-right: 1px solid black;
+    border-right: 1px solid grey;
 }
 
 .center-container {
@@ -16,13 +16,12 @@
     flex-direction: column;
     width: 60%;
     text-align: center;
-    border-right: 1px solid black;
+    border-right: 1px solid grey;
 }
 
 .discover-container {
     width: 25%;
     text-align: center;
-    background-color: antiquewhite;
     height: 100vh;
 }
 

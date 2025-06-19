@@ -1,0 +1,47 @@
+.avatar-container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 95%;
+    padding: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.avatar-click-box:hover {
+    background-color: rgb(228, 204, 175);
+}
+
+.avatar-click-box {
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+.profile-picture-container {
+    display: flex;
+    justify-content: left;
+    width: 40%;
+    height: 100%;
+    align-items: center;
+}
+
+.name-container {
+    width: 73%;
+    align-content: center;
+    text-align: left;
+    padding-top: 5px;
+    color: black;
+    font-weight: 600;
+}
+
+.user-image {
+    height: 60%;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
