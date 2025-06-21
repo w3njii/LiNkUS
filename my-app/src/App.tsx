@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createClient, Session } from "@supabase/supabase-js";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import LoginPage from "./pages/LoginPage";
 import Main from "./pages/Main";
+import UserProfile from "./pages/UserProfile";
 
 export const supabase = createClient(
-  "https://xytvpdkxrzbiykufavpy.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5dHZwZGt4cnpiaXlrdWZhdnB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2NzAzNDYsImV4cCI6MjA2NDI0NjM0Nn0.l0R2Xpm32XnrZSKTgBNG6yaD8a1F2jXPAD5c9a4hKzY"
+  "https://xejmdpqfbuuolvtrmxbw.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhlam1kcHFmYnV1b2x2dHJteGJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0MTQ3MDgsImV4cCI6MjA2NTk5MDcwOH0.U6JZcf9jN8WUeICaFBKzCdPMayvypzRlbQuT_F8LSRI"
 );
 
 function App() {
@@ -30,7 +30,15 @@ function App() {
   if (!session) {
     return <LoginPage />;
   } else {
-    return <Main user={session.user} />;
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/home" element={<Main />} />
+        </Routes>
+      </Router>
+    );
   }
 }
 

@@ -14,13 +14,15 @@
 }
 
 .avatar-click-box {
+    all: unset;
+    width: 100%;
     display: flex;
     box-sizing: border-box;
     padding-left: 10px;
     border-radius: 10px;
     transition: background-color 0.2s ease;
-    text-decoration: none;
-}
+    cursor: pointer;
+  }
 
 .profile-picture-container {
     display: flex;
@@ -40,7 +42,7 @@
 }
 
 .user-image {
-    height: 60%;
+    height: 80%;
     border: 2px solid black;
     border-radius: 50%;
 }

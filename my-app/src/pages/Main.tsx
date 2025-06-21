@@ -1,22 +1,7 @@
-import { Session } from "@supabase/supabase-js";
-import { supabase } from "../App";
 import "../styles/Main.css";
 import SideBar from "../components/sidebar/SideBar";
 
-interface MainProps {
-  user: Session["user"];
-}
-
-const handleLogout = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.error("Error logging out:", error.message);
-  } else {
-    console.log("Logged out successfully");
-  }
-};
-
-function Main({ user }: MainProps) {
+function Main() {
   return (
     <div className="main-content">
       <div className="sidebar-container">
