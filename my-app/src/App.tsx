@@ -20,35 +20,43 @@ export const supabase = createClient(
 
 function AppWrapper() {
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    let firstLoad = true;
+    const fetchSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error("Error getting session:", error);
+      }
+      setSession(data.session);
+      setLoading(false); 
+    };
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      firstLoad = false;
-    });
+    fetchSession();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
+    } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
 
-      if (event === "SIGNED_IN" && firstLoad) {
+      if (_event === "SIGNED_IN") {
         navigate("/");
       }
 
-      if (event === "SIGNED_OUT") {
+      if (_event === "SIGNED_OUT") {
         navigate("/login");
       }
     });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
-  
 
   useAutoLogoutTimer(session);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Routes>

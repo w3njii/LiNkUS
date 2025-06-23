@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { supabase } from "../App";
 import { Session } from "@supabase/supabase-js";
 
-const AUTO_LOGOUT_MS = 1000 * 5 * 60; // 5 mins
+const AUTO_LOGOUT_MS = 1000 * 60 * 50;
 
 export function useAutoLogoutTimer(session: Session | null) {
   useEffect(() => {
