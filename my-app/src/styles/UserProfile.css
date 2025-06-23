@@ -12,13 +12,37 @@
     border-right: 1px solid grey;
 }
 
+.user-profile-edit-profile-container {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px;
+    height: 2%;
+}
+
+.user-profile-edit-profile-button {
+    font-weight: 570;
+    background-color: rgb(241, 226, 205);
+    cursor: pointer;
+    height: 30px;
+    width: 130px;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.user-profile-edit-profile-button:hover {
+    background-color: rgb(228, 204, 175);
+}
+
 .user-profile-top-content {
     box-sizing: border-box;
     display: flex;
-    height: 33%;
+    flex-direction: row;
+    align-items: center;
+    height: 25%;
     margin-left: 60px;
     margin-right: 60px;
-    border-bottom: 1px solid gray;
     margin-bottom: 30px;
 }
 
@@ -32,7 +56,6 @@
     width: 200px;
     height: 200px;
     margin: 60px;
-
 }
 
 .user-profile-picture {
@@ -43,9 +66,6 @@
 }
 
 .user-profile-info-container {
-    width: 70%;
-    margin-top: 100px;
-    height: 16%;
     font-weight: 650;
 }
 
@@ -59,15 +79,25 @@
 }
 
 .user-profile-links-number {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.user-profile-bio {
+    height: 80px;
+    width: 600px;
 }
 
 .user-profile-courses-info-container {
     width: 100%;
-    border: 5px dotted blue;
 }
 
 .user-profile-bottom-content {
-    border: 2px dotted blue;
     height: 60%;
+    border: 2px dotted blue;
+}
+
+.user-profile-bio {
+    line-height: 1.2;
+    font-weight: 550;
 }

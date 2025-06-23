@@ -8,13 +8,20 @@ function Main() {
         <SideBar />
       </div>
       <div className="center-container">
-        <div className="events-container">
-          <div className="box1">1</div>
+        <div>Events {"(not implemented yet)"} </div>
+        <div className="center-scroll-area">
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
+          <div className="event-placeholder"> event </div>
         </div>
-
       </div>
       <div className="discover-container">
-        <p>Discover Placeholder</p>
+        <p>Discover {"(not implemented yet)"}</p>
       </div>
     </div>
   );
