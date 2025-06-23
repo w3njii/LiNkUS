@@ -55,7 +55,8 @@
 .profile-picture-container-user-profile {
     width: 200px;
     height: 200px;
-    margin: 60px;
+    margin-left: 60px;
+    margin-right: 60px;
 }
 
 .user-profile-picture {
@@ -67,6 +68,7 @@
 
 .user-profile-info-container {
     font-weight: 650;
+    margin-top: 12px;
 }
 
 .user-profile-name-container {

@@ -8,7 +8,6 @@ import "../styles/UserProfile.css";
 function UserProfile() {
   const navigate = useNavigate();
 
-  const [profile, setProfile] = useState<IUserProfile | null>(null);
   const [name, setName] = useState<String>("");
   const [username, setUsername] = useState<String>("");
   const [bio, setBio] = useState<String>("");
@@ -64,7 +63,7 @@ function UserProfile() {
             </div>
             <div className="user-profile-username-container">@{username}</div>
             <div className="user-profile-links-number">
-              <span style={{ fontWeight: "750" }}>15 </span>
+              <span style={{ fontWeight: "750" }}>0 </span>
               <span style={{ fontWeight: "500" }}> links </span>
             </div>
             <div className="user-profile-bio">
