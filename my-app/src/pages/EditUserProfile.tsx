@@ -6,40 +6,81 @@ import "../styles/EditUserProfile.css";
 function EditUserProfile() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const [newAvatarFile, setNewAvatarFile] = useState<File | null>(null);
   const [formError, setFormError] = useState("");
+  const [uploading, setUploading] = useState(false);
 
-    useEffect(() => {
-      const fetchProfile = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
-  
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("user_id", user.id)
-          .single();
-  
-          if (error) {
-            console.error("Failed to load profile:", error.message);
-          } else if (data) {
-            setName(data.name);
-            setUsername(data.username);
-            setBio(data.bio);
-          }
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+
+      if (error) {
+        console.error("Failed to load profile:", error.message);
+        alert("Failed to load profile");
+      } else if (data) {
+        setName(data.name);
+        setUsername(data.username);
+        setBio(data.bio);
+        if (data.avatar_url) {
+          setAvatarUrl(data.avatar_url);
+        }
       }
-  
-      fetchProfile();
-    }, []);
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setAvatarUrl(preview);
+      setNewAvatarFile(file);
+    }
+  };
+
+  const uploadAvatar = async (file: File, userId: string) => {
+    const fileExt = file.name.split(".").pop();
+    const timestamp = Date.now();
+    const filePath = `${userId}_${timestamp}.${fileExt}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("profile-pics")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      console.error("Upload error:", uploadError.message);
+      alert("Upload Error");
+      return null;
+    }
+
+    const { data } = supabase.storage
+      .from("profile-pics")
+      .getPublicUrl(filePath);
+
+    return data?.publicUrl ? `${data.publicUrl}?v=${timestamp}` : null;
+  };
 
   const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) return;
-    e.preventDefault();
 
     if (!name || !username) {
       setFormError(
@@ -59,26 +100,36 @@ function EditUserProfile() {
       return;
     }
 
+    setUploading(true);
+
+    let uploadedAvatarUrl = avatarUrl;
+
+    if (newAvatarFile) {
+      const publicUrl = await uploadAvatar(newAvatarFile, user.id);
+      if (publicUrl) {
+        uploadedAvatarUrl = publicUrl;
+      }
+    }
+
     const { data, error } = await supabase
       .from("profiles")
-      .update({ name, username, bio })
+      .update({ name, username, bio, avatar_url: uploadedAvatarUrl })
       .eq("user_id", user.id)
-      .select()
+      .select();
 
     if (error) {
       console.log(error);
-      setFormError("Please fill in the fields correctly")
-    }
-
-    if (data) {
-      console.log(data);
+      setFormError("Please fill in the fields correctly");
+    } else {
       setFormError("");
       navigate("/profile", { replace: true });
     }
+
+    setUploading(false);
   };
 
   const handleCancel = () => {
-    navigate("/profile", { replace: true });;
+    navigate("/profile", { replace: true });
   };
 
   const isValidUsername = (username: string) => {
@@ -92,18 +143,19 @@ function EditUserProfile() {
       <div className="edit-profile-form">
         <div className="edit-profile-picture-section">
           <img
-            src="/images/default_user_image.png"
+            src={avatarUrl || "/images/default_user_image.png"}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src =
+                "/images/default_user_image.png";
+            }}
             alt="Profile"
             className="edit-profile-picture"
           />
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                const url = URL.createObjectURL(e.target.files[0]);
-              }
-            }}
+            onChange={handleAvatarChange}
+            disabled={uploading}
           />
         </div>
 
@@ -138,13 +190,19 @@ function EditUserProfile() {
         </label>
 
         <div className="edit-profile-buttons">
-          <button type="button" className="save-button" onClick={handleSave}>
-            Save
+          <button
+            type="button"
+            className="save-button"
+            onClick={handleSave}
+            disabled={uploading}
+          >
+            {uploading ? "Saving..." : "Save"}
           </button>
           <button
             type="button"
             onClick={handleCancel}
             className="cancel-button"
+            disabled={uploading}
           >
             Cancel
           </button>

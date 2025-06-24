@@ -11,6 +11,7 @@ function UserProfile() {
   const [name, setName] = useState<String>("");
   const [username, setUsername] = useState<String>("");
   const [bio, setBio] = useState<String>("");
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -29,6 +30,9 @@ function UserProfile() {
           setName(data.name);
           setUsername(data.username);
           setBio(data.bio);
+          if (data.avatar_url) {
+            setAvatarUrl(data.avatar_url);
+          }
         }
     }
 
@@ -52,23 +56,23 @@ function UserProfile() {
         <div className="user-profile-top-content">
           <div className="profile-picture-container-user-profile">
             <img
-              src="/images/default_user_image.png"
-              alt="Profile"
+              src={avatarUrl || "/images/default_user_image.png"}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src =
+                  "/images/default_user_image.png";
+              }}
+              alt={`${username}'s profile picture`}
               className="user-profile-picture"
             />
           </div>
           <div className="user-profile-info-container">
-            <div className="user-profile-name-container">
-              {name}
-            </div>
+            <div className="user-profile-name-container">{name}</div>
             <div className="user-profile-username-container">@{username}</div>
             <div className="user-profile-links-number">
               <span style={{ fontWeight: "750" }}>0 </span>
               <span style={{ fontWeight: "500" }}> links </span>
             </div>
-            <div className="user-profile-bio">
-              {bio}
-            </div>
+            <div className="user-profile-bio">{bio}</div>
           </div>
         </div>
         <div className="user-profile-bottom-content">this is the bottom</div>

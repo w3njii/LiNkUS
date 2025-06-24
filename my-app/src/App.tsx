@@ -30,7 +30,22 @@ function AppWrapper() {
         console.error("Error getting session:", error);
       }
       setSession(data.session);
-      setLoading(false); 
+
+      if (data.session?.user) {
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("username")
+          .eq("user_id", data.session.user.id)
+          .single();
+
+        if (profileError) {
+          console.error("Failed to fetch profile:", profileError.message);
+        } else if (!profile?.username) {
+          navigate("/profile/edituserprofile");
+        }
+      }
+
+      setLoading(false);
     };
 
     fetchSession();
@@ -41,7 +56,26 @@ function AppWrapper() {
       setSession(newSession);
 
       if (_event === "SIGNED_IN") {
-        navigate("/");
+        if (newSession?.user) {
+          const checkProfile = async () => {
+            const { data: profile, error } = await supabase
+              .from("profiles")
+              .select("username")
+              .eq("user_id", newSession.user.id)
+              .single();
+
+            if (error) {
+              console.error("Profile fetch error:", error.message);
+              navigate("/"); 
+            } else if (!profile?.username) {
+              navigate("/profile/edituserprofile");
+            } else {
+              navigate("/");
+            }
+          };
+
+          checkProfile();
+        }
       }
 
       if (_event === "SIGNED_OUT") {

@@ -8,6 +8,7 @@ function UserAvatar() {
 
     const [name, setName] = useState<String>("");
     const [username, setUsername] = useState<String>("");
+    const [avatarUrl, setAvatarUrl] = useState<string>("");
   
     useEffect(() => {
       const fetchProfile = async () => {
@@ -25,6 +26,9 @@ function UserAvatar() {
           } else if (data) {
             setName(data.name);
             setUsername(data.username);
+            if (data.avatar_url) {
+              setAvatarUrl(data.avatar_url);
+            }
           }
       }
   
@@ -36,8 +40,12 @@ function UserAvatar() {
       <button className="avatar-click-box" onClick={() => navigate("/profile")}>
         <div className="profile-picture-container">
           <img
-            src="/images/default_user_image.png"
-            alt="User Avatar"
+            src={avatarUrl || "/images/default_user_image.png"}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src =
+                "/images/default_user_image.png";
+            }}
+            alt={`${username}'s profile picture`}
             className="user-image"
           />
         </div>
