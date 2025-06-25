@@ -33,7 +33,7 @@
     width: 50px;    /* or whatever fixed size fits your layout */
     height: 50px;
     flex-shrink: 0;
-    margin-right: 10px;
+    margin-right: 12px;
   }
   
   .user-image {

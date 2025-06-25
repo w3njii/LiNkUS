@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../App";
 import "../styles/EditUserProfile.css";
+import SelectCourses from "../components/user/SelectCourses";
 
 function EditUserProfile() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function EditUserProfile() {
   const [newAvatarFile, setNewAvatarFile] = useState<File | null>(null);
   const [formError, setFormError] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [selectedCourseCodes, setSelectedCourseCodes] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -41,6 +43,28 @@ function EditUserProfile() {
     };
 
     fetchProfile();
+  }, []);
+
+  useEffect(() => {
+    const loadUserCourses = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("user_courses")
+        .select("course_code")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.log("Failed to load User Courses: " + error);
+      } else if (data) {
+        setSelectedCourseCodes(data.map((d) => d.course_code));
+      }
+    };
+
+    loadUserCourses();
   }, []);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +122,25 @@ function EditUserProfile() {
         "Username can only contain letters, numbers, and underscores (no spaces or symbols)"
       );
       return;
+    }
+
+    await supabase.from("user_courses").delete().eq("user_id", user.id);
+
+    if (selectedCourseCodes.length > 0) {
+      const newCourseRows = selectedCourseCodes.map((code) => ({
+        user_id: user.id,
+        course_code: code,
+      }));
+
+      const { error: courseError } = await supabase
+        .from("user_courses")
+        .insert(newCourseRows);
+
+      if (courseError) {
+        console.error("Failed to update courses:", courseError.message);
+        setFormError("Profile saved, but failed to update courses");
+        return;
+      }
     }
 
     setUploading(true);
@@ -188,6 +231,14 @@ function EditUserProfile() {
             onChange={(e) => setBio(e.target.value)}
           />
         </label>
+
+        <div className="select-courses-container-user-profile">
+          Courses:
+          <SelectCourses
+            selectedCourseCodes={selectedCourseCodes}
+            setSelectedCourseCodes={setSelectedCourseCodes}
+          />
+        </div>
 
         <div className="edit-profile-buttons">
           <button

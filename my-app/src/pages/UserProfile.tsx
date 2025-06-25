@@ -2,20 +2,29 @@ import { useNavigate } from "react-router-dom";
 import SideBar from "../components/sidebar/SideBar";
 import { useEffect, useState } from "react";
 import { supabase } from "../App";
-import { IUserProfile } from "../Types";
 import "../styles/UserProfile.css";
+
+type UserCourseRow = {
+  course_code: string;
+  courses: {
+    name: string;
+  };
+};
 
 function UserProfile() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState<String>("");
-  const [username, setUsername] = useState<String>("");
-  const [bio, setBio] = useState<String>("");
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
   const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const [selectedCourses, setSelectedCourses] = useState<{ code: string; name: string }[]>([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -24,20 +33,47 @@ function UserProfile() {
         .eq("user_id", user.id)
         .single();
 
-        if (error) {
-          console.error("Failed to load profile:", error.message);
-        } else if (data) {
-          setName(data.name);
-          setUsername(data.username);
-          setBio(data.bio);
-          if (data.avatar_url) {
-            setAvatarUrl(data.avatar_url);
-          }
+      if (error) {
+        console.error("Failed to load profile:", error.message);
+      } else if (data) {
+        setName(data.name);
+        setUsername(data.username);
+        setBio(data.bio);
+        if (data.avatar_url) {
+          setAvatarUrl(data.avatar_url);
         }
-    }
+      }
+    };
 
     fetchProfile();
   }, []);
+
+  useEffect(() => {
+    const loadUserCourses = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("user_courses")
+        .select("course_code, courses(name)")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.log("Failed to Load Courses: " + error.message);
+      } else if (data) {
+        const formatted = (data as unknown as UserCourseRow[]).map((c) => ({
+          code: c.course_code,
+          name: c.courses.name,
+        }));
+        setSelectedCourses(formatted);
+      }
+    };
+
+    loadUserCourses();
+  }, []);
+  
 
   return (
     <div className="profile-content">
@@ -53,6 +89,7 @@ function UserProfile() {
             Edit Profile
           </button>
         </div>
+
         <div className="user-profile-top-content">
           <div className="profile-picture-container-user-profile">
             <img
@@ -75,7 +112,23 @@ function UserProfile() {
             <div className="user-profile-bio">{bio}</div>
           </div>
         </div>
-        <div className="user-profile-bottom-content">this is the bottom</div>
+
+        <div className="user-profile-bottom-content">
+          <div className="user-profile-courses-info">
+            <h1>Courses</h1>
+            <div className="courses-list-user-profile">
+              {selectedCourses.map((course) => (
+                <div key={course.code}>
+                  - {course.code}: {course.name}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="user-profile-interests-info">
+            <h1>Interests</h1>
+          </div>
+        </div>
       </div>
     </div>
   );
