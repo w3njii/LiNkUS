@@ -2,17 +2,16 @@ import { useNavigate } from "react-router-dom";
 import SideBar from "../components/sidebar/SideBar";
 import { useEffect, useState } from "react";
 import { supabase } from "../App";
-import { IUserProfile } from "../Types";
 import "../styles/UserProfile.css";
-import SelectCourses from "../components/user/SelectCourses";
 
 function UserProfile() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState<String>("");
-  const [username, setUsername] = useState<String>("");
-  const [bio, setBio] = useState<String>("");
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
   const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const [selectedCourses, setSelectedCourses] = useState<{ code: string; name: string }[]>([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -42,6 +41,29 @@ function UserProfile() {
     fetchProfile();
   }, []);
 
+  useEffect(() => {
+    const loadUserCourses = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("user_courses")
+        .select("course_code, courses(name)")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error("Failed to load user courses:", error.message);
+        return;
+      }
+
+      
+    };
+
+    loadUserCourses();
+  }, []);
+
   return (
     <div className="profile-content">
       <div className="sidebar-container">
@@ -56,6 +78,7 @@ function UserProfile() {
             Edit Profile
           </button>
         </div>
+
         <div className="user-profile-top-content">
           <div className="profile-picture-container-user-profile">
             <img
@@ -78,12 +101,21 @@ function UserProfile() {
             <div className="user-profile-bio">{bio}</div>
           </div>
         </div>
+
         <div className="user-profile-bottom-content">
-          <div className="user-profile-classes-info">
-              <SelectCourses />
+          <div className="user-profile-courses-info">
+            <h1>Courses</h1>
+            <div className="courses-list-user-profile">
+              {selectedCourses.map((course) => (
+                <div key={course.code}>
+                  - {course.code}: {course.name}
+                </div>
+              ))}
+            </div>
           </div>
+
           <div className="user-profile-interests-info">
-            this is for interests
+            <h1>Interests</h1>
           </div>
         </div>
       </div>

@@ -96,10 +96,21 @@
 }
 
 .user-profile-bottom-content {
-    height: 65%;
-    border: 2px dotted blue;
+    height: 50%;
     display: flex;
     flex-direction: column;
+    border-top: 1px solid gray;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.user-profile-bottom-content h1 {
+    font-size: 22px;
+    padding: 0;
+    margin: 0;
+    font-weight: 650;
 }
 
 .user-profile-bio {
@@ -107,12 +118,33 @@
     font-weight: 550;
 }
 
-.user-profile-classes-info {
-    border: 2px solid blue;
+.user-profile-courses-info {
     height: 50%;
+    margin-top: 20px;
+}
+
+.courses-list-user-profile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 35px;   
+    padding-top: 13px;
+    padding-left: 10px;
+    font-size: 20px;
+    overflow-y: auto;
+    height: 90%;
+  }
+  
+  .courses-list-user-profile > div:nth-child(odd) {
+    justify-self: start;
+  }
+
+.courses-list-user-profile div {
+    margin-bottom: 3px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .user-profile-interests-info {
-    border: 2px solid blue;
     height: 50%;
+    margin-top: 30px;
 }
