@@ -41,15 +41,15 @@
     flex-direction: row;
     align-items: center;
     height: 25%;
-    margin-left: 60px;
-    margin-right: 60px;
     margin-bottom: 30px;
+    padding-left: 40px;
 }
 
 .user-profile-container {
-    width: 100%;
+    width: 81%;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
 }
 
 .profile-picture-container-user-profile {
@@ -96,11 +96,23 @@
 }
 
 .user-profile-bottom-content {
-    height: 60%;
+    height: 65%;
     border: 2px dotted blue;
+    display: flex;
+    flex-direction: column;
 }
 
 .user-profile-bio {
     line-height: 1.2;
     font-weight: 550;
+}
+
+.user-profile-classes-info {
+    border: 2px solid blue;
+    height: 50%;
+}
+
+.user-profile-interests-info {
+    border: 2px solid blue;
+    height: 50%;
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../App";
 import { IUserProfile } from "../Types";
 import "../styles/UserProfile.css";
+import SelectCourses from "../components/user/SelectCourses";
 
 function UserProfile() {
   const navigate = useNavigate();
@@ -15,7 +16,9 @@ function UserProfile() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -24,17 +27,17 @@ function UserProfile() {
         .eq("user_id", user.id)
         .single();
 
-        if (error) {
-          console.error("Failed to load profile:", error.message);
-        } else if (data) {
-          setName(data.name);
-          setUsername(data.username);
-          setBio(data.bio);
-          if (data.avatar_url) {
-            setAvatarUrl(data.avatar_url);
-          }
+      if (error) {
+        console.error("Failed to load profile:", error.message);
+      } else if (data) {
+        setName(data.name);
+        setUsername(data.username);
+        setBio(data.bio);
+        if (data.avatar_url) {
+          setAvatarUrl(data.avatar_url);
         }
-    }
+      }
+    };
 
     fetchProfile();
   }, []);
@@ -75,7 +78,14 @@ function UserProfile() {
             <div className="user-profile-bio">{bio}</div>
           </div>
         </div>
-        <div className="user-profile-bottom-content">this is the bottom</div>
+        <div className="user-profile-bottom-content">
+          <div className="user-profile-classes-info">
+              <SelectCourses />
+          </div>
+          <div className="user-profile-interests-info">
+            this is for interests
+          </div>
+        </div>
       </div>
     </div>
   );
