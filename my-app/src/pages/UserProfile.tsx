@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import { supabase } from "../App";
 import "../styles/UserProfile.css";
 
+type UserCourseRow = {
+  course_code: string;
+  courses: {
+    name: string;
+  };
+};
+
 function UserProfile() {
   const navigate = useNavigate();
 
@@ -54,15 +61,19 @@ function UserProfile() {
         .eq("user_id", user.id);
 
       if (error) {
-        console.error("Failed to load user courses:", error.message);
-        return;
+        console.log("Failed to Load Courses: " + error.message);
+      } else if (data) {
+        const formatted = (data as unknown as UserCourseRow[]).map((c) => ({
+          code: c.course_code,
+          name: c.courses.name,
+        }));
+        setSelectedCourses(formatted);
       }
-
-      
     };
 
     loadUserCourses();
   }, []);
+  
 
   return (
     <div className="profile-content">

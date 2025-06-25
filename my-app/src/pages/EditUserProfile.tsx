@@ -57,14 +57,15 @@ function EditUserProfile() {
         .select("course_code")
         .eq("user_id", user.id);
 
-      if (!error && data) {
+      if (error) {
+        console.log("Failed to load User Courses: " + error);
+      } else if (data) {
         setSelectedCourseCodes(data.map((d) => d.course_code));
       }
     };
 
     loadUserCourses();
   }, []);
-  
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -123,7 +124,6 @@ function EditUserProfile() {
       return;
     }
 
-
     await supabase.from("user_courses").delete().eq("user_id", user.id);
 
     if (selectedCourseCodes.length > 0) {
@@ -170,7 +170,6 @@ function EditUserProfile() {
 
     setUploading(false);
   };
-
 
   const handleCancel = () => {
     navigate("/profile", { replace: true });
