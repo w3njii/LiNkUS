@@ -1,0 +1,56 @@
+.avatar-container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 95%;
+    padding: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.avatar-click-box:hover {
+    background-color: rgb(228, 204, 175);
+}
+  .avatar-click-box {
+    all: unset;
+    display: flex;
+    flex-direction: row;      /* Horizontal alignment */
+    align-items: center;      /* Vertically center image + name */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+  
+
+  .profile-picture-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;    /* or whatever fixed size fits your layout */
+    height: 50px;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+  
+  .user-image {
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+.name-container {
+    width: 73%;
+    align-content: center;
+    text-align: left;
+    padding-top: 5px;
+    color: black;
+    font-weight: 600;
+}
+
+

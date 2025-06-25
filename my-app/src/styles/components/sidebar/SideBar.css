@@ -6,10 +6,8 @@ a {
     width: 100%;
 }
 
-.logo-container {
-    display: flex;
+.profile-container {
     align-items: center;
-    width: 85%;
     box-sizing: border-box;
     height: 10%;
     padding-left: 8px;
@@ -34,6 +32,3 @@ a {
     padding-bottom: 10px;
 }
 
-HomeButton {
-    padding: 2px;
-}

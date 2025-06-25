@@ -1,8 +1,11 @@
 import { TiHome } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
 function HomeButton({ className }: { className?: string }) {
+  const navigate = useNavigate();
+  
   return (
-    <button className={className}>
+    <button className={className} onClick={() => navigate("/home")}>
       <TiHome size={25} />
       Home
     </button>
