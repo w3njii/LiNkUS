@@ -119,7 +119,7 @@ function EditUserProfile() {
 
     if (error) {
       console.log(error);
-      setFormError("Please fill in the fields correctly");
+      setFormError("Username already exists, please choose different username");
     } else {
       setFormError("");
       navigate("/profile", { replace: true });
