@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../App";
 import "../styles/EditUserProfile.css";
 import SelectCourses from "../components/user/SelectCourses";
+import SelectInterests from "../components/user/SelectInterests";
 
 function EditUserProfile() {
   const navigate = useNavigate();
 
+  const [userId, setUserId] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [bio, setBio] = useState<string>("");
@@ -15,57 +17,83 @@ function EditUserProfile() {
   const [formError, setFormError] = useState("");
   const [uploading, setUploading] = useState(false);
   const [selectedCourseCodes, setSelectedCourseCodes] = useState<string[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchUser = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) return;
+      if (user) {
+        setUserId(user.id);
+      }
+    };
+    fetchUser();
+  }, []);
 
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
+  useEffect(() => {
+    if (userId) {
+      const fetchProfile = async () => {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("user_id", userId)
+          .single();
 
-      if (error) {
-        console.error("Failed to load profile:", error.message);
-        alert("Failed to load profile");
-      } else if (data) {
-        setName(data.name);
-        setUsername(data.username);
-        setBio(data.bio);
-        if (data.avatar_url) {
-          setAvatarUrl(data.avatar_url);
+        if (error) {
+          console.error("Failed to load profile:", error.message);
+          alert("Failed to load profile");
+        } else if (data) {
+          setName(data.name);
+          setUsername(data.username);
+          setBio(data.bio);
+          if (data.avatar_url) {
+            setAvatarUrl(data.avatar_url);
+          }
         }
-      }
-    };
+      };
 
-    fetchProfile();
-  }, []);
+      fetchProfile();
+    }
+  }, [userId]);
 
   useEffect(() => {
-    const loadUserCourses = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
+    if (userId) {
+      const loadUserCourses = async () => {
+        const { data, error } = await supabase
+          .from("user_courses")
+          .select("course_code")
+          .eq("user_id", userId);
 
-      const { data, error } = await supabase
-        .from("user_courses")
-        .select("course_code")
-        .eq("user_id", user.id);
+        if (error) {
+          console.log("Failed to load User Courses: " + error);
+        } else if (data) {
+          setSelectedCourseCodes(data.map((d) => d.course_code));
+        }
+      };
 
-      if (error) {
-        console.log("Failed to load User Courses: " + error);
-      } else if (data) {
-        setSelectedCourseCodes(data.map((d) => d.course_code));
-      }
-    };
+      loadUserCourses();
+    }
+  }, [userId]);
 
-    loadUserCourses();
-  }, []);
+  useEffect(() => {
+    if (userId) {
+      const loadUserInterests = async () => {
+        const { data, error } = await supabase
+          .from("user_interests")
+          .select("interests")
+          .eq("user_id", userId);
+
+        if (error) {
+          console.log("Failed to load interests:", error.message);
+        } else if (data) {
+          setSelectedInterests(data.map((d) => d.interests));
+        }
+      };
+
+      loadUserInterests();
+    }
+  }, [userId]);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -101,10 +129,10 @@ function EditUserProfile() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!userId) {
+      setFormError("User ID not found. Please refresh the page and try again.");
+      return;
+    }
 
     if (!name || !username) {
       setFormError(
@@ -124,11 +152,12 @@ function EditUserProfile() {
       return;
     }
 
-    await supabase.from("user_courses").delete().eq("user_id", user.id);
+    await supabase.from("user_courses").delete().eq("user_id", userId);
+    await supabase.from("user_interests").delete().eq("user_id", userId);
 
     if (selectedCourseCodes.length > 0) {
       const newCourseRows = selectedCourseCodes.map((code) => ({
-        user_id: user.id,
+        user_id: userId,
         course_code: code,
       }));
 
@@ -137,18 +166,35 @@ function EditUserProfile() {
         .insert(newCourseRows);
 
       if (courseError) {
-        console.error("Failed to update courses:", courseError.message);
+        console.error("Failed to update courses: ", courseError.message);
         setFormError("Profile saved, but failed to update courses");
         return;
       }
+    }
+
+    if (selectedInterests.length > 0) {
+      const newInterestRows = selectedInterests.map((interest) => ({
+        user_id: userId,
+        interests: interest,
+      }));
+
+      const { error: interestError } = await supabase
+        .from("user_interests")
+        .insert(newInterestRows);
+
+        if (interestError) {
+          console.log("Failed to update interests: ", interestError.message);
+          setFormError("Profile saved, but failed to update interests");
+          return;
+        }
     }
 
     setUploading(true);
 
     let uploadedAvatarUrl = avatarUrl;
 
-    if (newAvatarFile) {
-      const publicUrl = await uploadAvatar(newAvatarFile, user.id);
+    if (newAvatarFile && userId) {
+      const publicUrl = await uploadAvatar(newAvatarFile, userId);
       if (publicUrl) {
         uploadedAvatarUrl = publicUrl;
       }
@@ -157,7 +203,7 @@ function EditUserProfile() {
     const { data, error } = await supabase
       .from("profiles")
       .update({ name, username, bio, avatar_url: uploadedAvatarUrl })
-      .eq("user_id", user.id)
+      .eq("user_id", userId)
       .select();
 
     if (error) {
@@ -237,6 +283,14 @@ function EditUserProfile() {
           <SelectCourses
             selectedCourseCodes={selectedCourseCodes}
             setSelectedCourseCodes={setSelectedCourseCodes}
+          />
+        </div>
+
+        <div className="select-courses-container-user-profile">
+          Interests:
+          <SelectInterests
+            selectedInterests={selectedInterests}
+            setSelectedInterests={setSelectedInterests}
           />
         </div>
 
