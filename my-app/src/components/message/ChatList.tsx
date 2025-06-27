@@ -1,10 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Search from "./MessageSearch";
 import { Friend, ChatListProps } from "../../Types";
 import { supabase } from "../../App";
+import "../../styles/components/message/ChatList.css";
 
-function ChatList({ onSelect, friends, currentUserId }: ChatListProps): React.ReactElement {
+function ChatList({
+  onSelect,
+  friends,
+  currentUserId,
+}: ChatListProps): React.ReactElement {
   const [search, setSearch] = useState("");
   const [mergedList, setMergedList] = useState<Friend[]>([]);
 
@@ -12,7 +16,7 @@ function ChatList({ onSelect, friends, currentUserId }: ChatListProps): React.Re
     setSearch(term);
 
     if (term.trim().length === 0) {
-      setMergedList(friends); 
+      setMergedList(friends);
       return;
     }
 
@@ -25,18 +29,17 @@ function ChatList({ onSelect, friends, currentUserId }: ChatListProps): React.Re
     if (profiles) {
       const existingIds = new Set(friends.map((f) => f.id));
       const newUsers = profiles
-                        .filter((u) => !existingIds.has(u.user_id))
-                        .map((u) => {
-                          const maybeFriend = friends.find(f => f.id === u.user_id);
-                          return {
-                            id: u.user_id,
-                            username: u.username, 
-                            avatar_url: u.avatar_url,
-                            lastMessage: maybeFriend?.lastMessage ?? null,
-                          };
-                        });
+        .filter((u) => !existingIds.has(u.user_id))
+        .map((u) => {
+          const maybeFriend = friends.find((f) => f.id === u.user_id);
+          return {
+            id: u.user_id,
+            username: u.username,
+            avatar_url: u.avatar_url,
+            lastMessage: maybeFriend?.lastMessage ?? null,
+          };
+        });
 
-      // Merge current friends + new users
       const matchingFriends = friends.filter((f) =>
         (f.username ?? "").toLowerCase().includes(term.toLowerCase())
       );
@@ -50,33 +53,26 @@ function ChatList({ onSelect, friends, currentUserId }: ChatListProps): React.Re
   }, [friends]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        <Search value={search} onChange={handleSearch} />
-
-      <div style={{ overflowY: "auto", flexGrow: 1 }}>
+    <div className="chat-list-container">
+      <Search value={search} onChange={handleSearch} />
+      <div className="chat-items-container">
         {mergedList.map((friend) => (
           <div
             key={friend.id}
-            onClick={() => {
-              console.log("Selected friend ID:", friend.id);
-              onSelect(friend.id);
-            }}
-            style={{
-              padding: "10px",
-              cursor: "pointer",
-              borderBottom: "1px solid #333",
-              color: "white",
-            }}
+            className="chat-item"
+            onClick={() => onSelect(friend.id)}
           >
-            <div style={{ fontWeight: "bold" }}>{friend.username}</div>
-            <div style={{ fontSize: "0.875rem", color: "#ccc" }}>
-              {friend.lastMessage ?? <span style={{ color: "#888" }}>(New conversation)</span>}
+            <div className="chat-username">{friend.username}</div>
+            <div className="chat-message">
+              {friend.lastMessage ?? (
+                <span className="new-convo">(New conversation)</span>
+              )}
             </div>
           </div>
         ))}
       </div>
     </div>
-  );
+  );  
 }
 
 export default ChatList;

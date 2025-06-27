@@ -1,6 +1,7 @@
 export interface Message {
     id: string;
     user_id: string;
+    recipient_id: string; 
     content: string;
     created_at: string;
     username?: string;
