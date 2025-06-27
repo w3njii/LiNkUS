@@ -15,7 +15,6 @@ type Props = {
 function SelectCourses({ selectedCourseCodes, setSelectedCourseCodes }: Props) {
   const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
 
-  // Fetch full course names for selectedCourseCodes
   useEffect(() => {
     const fetchCourseLabels = async () => {
       if (selectedCourseCodes.length === 0) {
@@ -40,15 +39,16 @@ function SelectCourses({ selectedCourseCodes, setSelectedCourseCodes }: Props) {
     fetchCourseLabels();
   }, [selectedCourseCodes]);
 
-  // Load options from Supabase while typing
   const loadOptions = async (inputValue: string): Promise<OptionType[]> => {
-    if (!inputValue) return [];
+    let query = supabase.from("courses").select("course_code, name").limit(20);
 
-    const { data, error } = await supabase
-      .from("courses")
-      .select("course_code, name")
-      .or(`name.ilike.%${inputValue}%,course_code.ilike.%${inputValue}%`)
-      .limit(20);
+    if (inputValue.trim()) {
+      query = query.or(
+        `name.ilike.%${inputValue}%,course_code.ilike.%${inputValue}%`
+      );
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error("Error fetching courses:", error);
@@ -61,18 +61,20 @@ function SelectCourses({ selectedCourseCodes, setSelectedCourseCodes }: Props) {
     }));
   };
 
+  const handleChange = (selected: readonly OptionType[] | null): void => {
+    const selectedArray = Array.isArray(selected) ? selected : [];
+    setSelectedOptions(selectedArray);
+    setSelectedCourseCodes(selectedArray.map((opt) => opt.value));
+  };
+
   return (
     <AsyncSelect
       isMulti
       cacheOptions
-      defaultOptions={false}
+      defaultOptions
       loadOptions={loadOptions}
       value={selectedOptions}
-      onChange={(selected) => {
-        const selectedArray = Array.isArray(selected) ? selected : [];
-        setSelectedOptions(selectedArray);
-        setSelectedCourseCodes(selectedArray.map((opt) => opt.value));
-      }}
+      onChange={handleChange}
       placeholder="Search for your course"
     />
   );
