@@ -11,7 +11,8 @@ import { useAutoLogoutTimer } from "./hooks/useAutoLogoutTimer";
 import LoginPage from "./pages/LoginPage";
 import Main from "./pages/Main";
 import UserProfile from "./pages/UserProfile";
-import EditUserProfile from "./pages/EditUserProfile";
+import EditUserProfile from "./pages/EditUserProfile"
+import Message from "./pages/Message";
 
 export const supabase = createClient(
   "https://xytvpdkxrzbiykufavpy.supabase.co",
@@ -104,6 +105,7 @@ function AppWrapper() {
           <Route path="*" element={<Main />} />
           <Route path="/home" element={<Main />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/message" element={<Message user={session.user} />} />
           <Route
             path="/profile/edituserprofile"
             element={<EditUserProfile />}
