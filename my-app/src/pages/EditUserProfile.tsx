@@ -200,7 +200,7 @@ function EditUserProfile() {
       }
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("profiles")
       .update({ name, username, bio, avatar_url: uploadedAvatarUrl })
       .eq("user_id", userId)

@@ -1,0 +1,79 @@
+.search-content {
+    display: flex;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.search-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    box-sizing: border-box;
+}
+  
+.search-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+}
+  
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+  
+.user-card {
+    display: flex;
+    border: 1px solid rgb(241, 241, 241);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    height: 140px;
+    background-color: rgb(255, 233, 204);
+    align-items: center;
+}
+
+.user-card:hover {
+    background-color: rgb(242, 216, 187);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.user-card-image-container {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+  
+.user-avatar-in-search {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: burlywood;
+    border: 2px solid rgb(54, 16, 16);
+}
+
+.user-card-name-username-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.user-card-name-username-container h1 {
+    font-weight: 550;
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 3px;
+}
+
+.user-card-name-username-container div {
+    font-weight: 550;
+    font-size: 15px;
+}
