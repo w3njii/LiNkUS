@@ -6,7 +6,7 @@ export interface Message {
     created_at: string;
     username?: string;
     avatar_url?: string;
-}
+};
   
 export type Friend = {
   id: string;
@@ -14,29 +14,16 @@ export type Friend = {
   lastMessage: string | null;
 };
   
-export interface IUserProfile {
+export interface UserProfileSearch {
+  user_id: string;
+  name: string;
   username: string;
-}
-
-export interface ChatListProps {
-  onSelect: (id: string) => void;
-  friends: Friend[];
-  currentUserId: string;
-}
-
-export interface UserProfileProps {
-  name?: string;
-  username: string;
-  bio?: string;
-  avatarUrl: string;
-  location?: string;
-  interests?: string[];
-  classes?: string[];
-}
-
-export type RecentChatRow = {
-  friend_id: string;
-  friend_username: string;
-  friend_avatar_url: string | null;
-  last_message: string;
+  avatar_url: string | null;
 };
+
+export interface IUserProfileDisplay {
+  name: string;
+  username: string;
+  bio?: string | null;
+  avatar_url?: string | null;
+}

@@ -133,10 +133,6 @@
     overflow-y: auto;
     height: 90%;
   }
-  
-  .courses-list-user-profile > div:nth-child(odd) {
-    justify-self: start;
-  }
 
 .courses-list-user-profile div {
     margin-bottom: 3px;
@@ -151,4 +147,27 @@
 .user-profile-interests-info {
     height: 50%;
     margin-top: 30px;
+}
+
+.user-profile-display-back-button-container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    height: 2%;
+}
+
+.user-profile-display-back-button {
+    font-weight: 570;
+    background-color: rgb(241, 226, 205);
+    cursor: pointer;
+    height: 30px;
+    width: 130px;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.user-profile-display-back-button:hover {
+    background-color: rgb(228, 204, 175);
 }

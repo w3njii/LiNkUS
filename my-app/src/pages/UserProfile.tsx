@@ -126,7 +126,7 @@ function UserProfile() {
                 (e.target as HTMLImageElement).src =
                   "/images/default_user_image.png";
               }}
-              alt={`${username}'s profile picture`}
+              alt={`${username}'s profile`}
               className="user-profile-picture"
             />
           </div>
