@@ -11,7 +11,10 @@ import { useAutoLogoutTimer } from "./hooks/useAutoLogoutTimer";
 import LoginPage from "./pages/LoginPage";
 import Main from "./pages/Main";
 import UserProfile from "./pages/UserProfile";
-import EditUserProfile from "./pages/EditUserProfile";
+import EditUserProfile from "./pages/EditUserProfile"
+import Message from "./pages/Message";
+import Search from "./pages/Search";
+import UserProfileDisplay from "./components/user/UserProfileDisplay";
 
 export const supabase = createClient(
   "https://xytvpdkxrzbiykufavpy.supabase.co",
@@ -66,11 +69,11 @@ function AppWrapper() {
 
             if (error) {
               console.error("Profile fetch error:", error.message);
-              navigate("/"); 
-            } else if (!profile?.username) {
+              alert("Profile Fetch error");
+            }
+
+            if (!profile?.username) {
               navigate("/profile/edituserprofile");
-            } else {
-              navigate("/");
             }
           };
 
@@ -85,6 +88,20 @@ function AppWrapper() {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  useEffect(() => {
+    const entries = performance.getEntriesByType?.("navigation");
+    if (
+      entries &&
+      entries[0] &&
+      (entries[0] as PerformanceNavigationTiming).type === "reload" &&
+      window.location.pathname !== "/"
+    ) {
+      navigate("/");
+    }
+    // the desired effect is to have navigate("/") run once on first mount, so it is not dependent on navigate, therefore we can safely suppress this warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useAutoLogoutTimer(session);
 
@@ -104,10 +121,13 @@ function AppWrapper() {
           <Route path="*" element={<Main />} />
           <Route path="/home" element={<Main />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/message" element={<Message user={session.user} />} />
           <Route
             path="/profile/edituserprofile"
             element={<EditUserProfile />}
           />
+          <Route path="/search" element={<Search />} />
+          <Route path="/user/:userId" element={<UserProfileDisplay />} />
         </>
       )}
     </Routes>

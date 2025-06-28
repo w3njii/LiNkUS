@@ -1,0 +1,30 @@
+.message-main-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+}
+  
+.message-main-content-sidebar-container {
+    box-sizing: border-box;
+    width: 20%;
+    height: 100%;
+    border-right: 2px solid gray;
+}
+  
+.message-main-content-input-container {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 80%;
+    height: 100%;
+}
+
+.messaging-selected-friend-name {
+    border-bottom: 2px solid gray;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+  

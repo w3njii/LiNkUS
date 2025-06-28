@@ -66,6 +66,7 @@ function Main() {
         </div>
       <div className="discover-container">
         <p>Discover {"(not implemented yet)"}</p>
+        <div> </div>
       </div>
     </div>
   );

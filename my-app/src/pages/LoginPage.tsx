@@ -17,7 +17,7 @@ function LoginPage() {
           <div className="auth">
             <Auth
               supabaseClient={supabase}
-              providers={["google", "github", "facebook"]}
+              providers={["google", "github"]}
             ></Auth>
           </div>
         </div>
