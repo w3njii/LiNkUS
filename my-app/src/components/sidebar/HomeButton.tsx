@@ -5,7 +5,7 @@ function HomeButton({ className }: { className?: string }) {
   const navigate = useNavigate();
   
   return (
-    <button className={className} onClick={() => navigate("/home")}>
+    <button className={className} onClick={() => window.location.reload()}>
       <TiHome size={25} />
       Home
     </button>

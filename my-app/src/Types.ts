@@ -14,12 +14,14 @@ export type Friend = {
   lastMessage: string | null;
 };
   
+
 export interface UserProfileSearch {
   user_id: string;
   name: string;
   username: string;
   avatar_url: string | null;
 };
+
 
 export interface ChatListProps {
   onSelect: (id: string) => void;
@@ -42,6 +44,15 @@ export interface UserProfileProps {
   location?: string;
   interests?: string[];
   classes?: string[];
+}
+
+
+export interface Event {
+  id: number;
+  name: string;
+  start_date: string;
+  mode: string | null;
+  image_link: string | null;
 }
 
 export interface IUserProfileDisplay {
