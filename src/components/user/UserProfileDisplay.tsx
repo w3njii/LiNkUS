@@ -42,13 +42,13 @@ function UserProfileDisplay() {
 
       const { data: interestsData, error: interestsError } = await supabase
         .from("user_interests")
-        .select("interest_name")
+        .select("interests")
         .eq("user_id", userId);
 
       if (interestsError) {
         console.error("Failed to fetch interests:", interestsError.message);
       } else if (interestsData) {
-        setInterests(interestsData.map((i) => i.interest_name));
+        setInterests(interestsData.map((i) => i.interests));
       }
     };
 

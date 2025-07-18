@@ -42,9 +42,9 @@ function Message({ user }: MainProps) {
   if (selectedFriend) {
     return (
       <div className="message-main">
-        <div className="sidebar-container">
-          <SideBar />
-        </div>
+          <div className="sidebar-container">
+            <SideBar />
+          </div>
         <div className="messages-content-container">
           <div className="message-main-container">
             <div className="message-main-content-sidebar-container">
@@ -52,7 +52,6 @@ function Message({ user }: MainProps) {
             </div>
             <div className="message-main-content-input-container">
               <h2 className="messaging-selected-friend-name">{friendName}</h2>
-
               <MessageInput recipientId={selectedFriend} />
             </div>
           </div>
@@ -63,7 +62,7 @@ function Message({ user }: MainProps) {
     return (
       <div className="message-main">
         <div className="sidebar-container">
-          <SideBar/>
+          <SideBar />
         </div>
         <div className="messages-content-container">
           <div className="message-main-container">
