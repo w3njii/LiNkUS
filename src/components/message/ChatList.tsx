@@ -23,7 +23,7 @@ function ChatList({
     const { data: profiles, error } = await supabase
       .from("profiles")
       .select("user_id, username, avatar_url")
-      .ilike("username", `%${term}%`)
+      .ilike("username", `${term}%`)
       .neq("user_id", currentUserId);
 
     if (profiles) {
@@ -41,7 +41,7 @@ function ChatList({
         });
 
       const matchingFriends = friends.filter((f) =>
-        (f.username ?? "").toLowerCase().includes(term.toLowerCase())
+        (f.username ?? "").toLowerCase().startsWith(term.toLowerCase())
       );
 
       setMergedList([...matchingFriends, ...newUsers]);
