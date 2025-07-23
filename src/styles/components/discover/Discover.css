@@ -1,5 +1,5 @@
 .discover-container-in-discover {
-  
+  overflow-y: auto;
 }
 
 .discover-heading {

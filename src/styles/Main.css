@@ -44,3 +44,7 @@
     height: 300px;
     width: 300px;
 }
+
+.discover-container {
+    overflow-y: auto;
+}
