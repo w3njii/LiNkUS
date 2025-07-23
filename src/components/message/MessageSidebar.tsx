@@ -10,41 +10,63 @@ function MessageSidebar({
   onSelectFriend: (id: string) => void;
 }): React.ReactElement {
   const [friends, setFriends] = useState<Friend[]>([]);
-  const [currentUserId, setCurrentUserId] = useState<string | undefined>(
-    undefined
-  );
+  const [currentUserId, setCurrentUserId] = useState<string | undefined>();
+
+  const fetchUsers = async (uid?: string) => {
+    const userId = uid ?? currentUserId;
+    if (!userId) return;
+
+    const { data, error } = await supabase.rpc("get_recent_chats", {
+      uid: userId,
+    });
+
+    if (data) {
+      const mapped = (data as RecentChatRow[]).map((row) => ({
+        id: row.friend_id,
+        username: row.friend_username,
+        avatar_url: row.friend_avatar_url,
+        lastMessage: row.last_message,
+      }));
+      setFriends(mapped);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const init = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       setCurrentUserId(user?.id);
-
-      const { data, error } = await supabase.rpc("get_recent_chats", {
-        uid: user?.id,
-      });
-
-      console.log("RPC result:", data);
-
-      if (data) {
-        const mapped = (data as RecentChatRow[]).map((row) => ({
-          id: row.friend_id,
-          username: row.friend_username,
-          avatar_url: row.friend_avatar_url,
-          lastMessage: row.last_message,
-        }));
-
-        console.log(
-          "Mapped friend IDs:",
-          mapped.map((f) => f.id)
-        );
-        setFriends(mapped);
-      }
+      fetchUsers(user?.id);
     };
-
-    fetchUsers();
+    init();
   }, []);
+
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    const channel = supabase
+      .channel("sidebar-message-listener")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+        },
+        (payload) => {
+          const { user_id, recipient_id } = payload.new;
+          if (user_id === currentUserId || recipient_id === currentUserId) {
+            fetchUsers();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [currentUserId]);
 
   return (
     <div className="messages-sidebar-main-container">
