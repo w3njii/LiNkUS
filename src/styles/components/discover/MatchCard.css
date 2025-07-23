@@ -1,0 +1,50 @@
+.match-card {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .match-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .match-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .match-username {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .match-name {
+    color: #4b5563; /* Tailwind gray-600 */
+  }
+  
+  .match-section {
+    margin-bottom: 0.75rem;
+  }
+  
+  .match-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  
+  .match-label.courses {
+    color: #2563eb; /* Tailwind blue-600 */
+  }
+  
+  .match-label.interests {
+    color: #16a34a; /* Tailwind green-600 */
+  }
+  
+  .match-list {
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    color: #374151; /* Tailwind gray-800 */
+    list-style-type: disc;
+  }
+  
