@@ -15,6 +15,7 @@ import EditUserProfile from "./pages/EditUserProfile"
 import Message from "./pages/Message";
 import Search from "./pages/Search";
 import UserProfileDisplay from "./components/user/UserProfileDisplay";
+import Notifications from "./pages/Notifications";
 
 export const supabase = createClient(
   "https://xytvpdkxrzbiykufavpy.supabase.co",
@@ -127,6 +128,7 @@ function AppWrapper() {
             element={<EditUserProfile />}
           />
           <Route path="/search" element={<Search />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/user/:userId" element={<UserProfileDisplay />} />
         </>
       )}
