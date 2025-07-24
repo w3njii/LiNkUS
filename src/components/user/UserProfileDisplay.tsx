@@ -5,6 +5,7 @@ import SideBar from "../sidebar/SideBar";
 import { IUserProfileDisplay } from "../../Types";
 import { useNavigate } from "react-router-dom";
 import "../../styles/UserProfile.css";
+import LinkRequestButton from "../linking/LinkRequestButton";
 
 function UserProfileDisplay() {
   const navigate = useNavigate();
@@ -12,6 +13,19 @@ function UserProfileDisplay() {
   const [profile, setProfile] = useState<IUserProfileDisplay>();
   const [courses, setCourses] = useState<string[]>([]);
   const [interests, setInterests] = useState<string[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string>("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setCurrentUserId(user.id);
+      }
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -55,7 +69,7 @@ function UserProfileDisplay() {
     fetchProfile();
   }, [userId]);
 
-  if (!profile) return(<div></div>)
+  if (!profile) return <div></div>;
   return (
     <div className="profile-content">
       <div className="sidebar-container">
@@ -92,6 +106,14 @@ function UserProfileDisplay() {
               <span style={{ fontWeight: "500" }}> links </span>
             </div>
             <div className="user-profile-bio">{profile.bio}</div>
+            <div className="link-button-container">
+              {currentUserId && userId && (
+                <LinkRequestButton
+                  currentUserId={currentUserId}
+                  otherUserId={userId}
+                />
+              )}
+            </div>
           </div>
         </div>
 

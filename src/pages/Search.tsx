@@ -10,14 +10,31 @@ function Search() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<UserProfileSearch[]>([]);
   const [loading, setLoading] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   useEffect(() => {
+    const getCurrentUser = async () => {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+      if (user) {
+        setCurrentUserId(user.id);
+      } else {
+        console.error("Failed to get user:", error?.message);
+      }
+    };
+
+    getCurrentUser();
+  }, []);
+
+  useEffect(() => {
     const searchUsers = async () => {
-      if (query.trim() === "") {
+      if (!currentUserId || query.trim() === "") {
         setResults([]);
         return;
       }
@@ -27,23 +44,21 @@ function Search() {
       const { data: users, error } = await supabase
         .from("profiles")
         .select("user_id, name, username, avatar_url")
-        .or(`name.ilike.%${query}%,username.ilike.%${query}%`);
+        .or(`name.ilike.%${query}%,username.ilike.%${query}%`)
+        .neq("user_id", currentUserId); 
 
       if (error) {
         console.error("Failed to search users:", error.message);
         setResults([]);
-        return;
-      } else if (!users || users.length === 0) {
-        setResults([]);
       } else {
-        setResults(users);
+        setResults(users || []);
       }
 
       setLoading(false);
     };
 
     searchUsers();
-  }, [query]);
+  }, [query, currentUserId]);
 
   return (
     <div className="search-content">

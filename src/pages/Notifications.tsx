@@ -1,15 +1,40 @@
 import { useState, useEffect } from "react";
 import SideBar from "../components/sidebar/SideBar";
 import { supabase } from "../App";
+import IncomingRequests from "../components/linking/IncomingRequests";
+import NotificationsFeed from "../components/Notifications/NotificationFeed";
 
 function Notifications() {
+
+  const [currentUserId, setCurrentUserId] = useState<string>();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setCurrentUserId(user.id);
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="search-content">
       <div className="sidebar-container">
         <SideBar />
       </div>
 
-      <div className="notifications-main"></div>
+      <div className="notifications-main">
+        {currentUserId && (
+          <>
+            <IncomingRequests currentUserId={currentUserId} />
+            <hr />
+            <NotificationsFeed currentUserId={currentUserId} />
+          </>
+        )}
+      </div>
     </div>
   );
 }
