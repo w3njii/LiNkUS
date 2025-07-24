@@ -70,3 +70,32 @@ export async function getAcceptedLinks(userId: string) {
       `and(requester_id.eq.${userId},status.eq.accepted),and(recipient_id.eq.${userId},status.eq.accepted)`
     );
 }
+
+export async function areUsersLinked(userA: string, userB: string) {
+  const { data, error } = await supabase
+    .from("user_link_requests")
+    .select("*")
+    .or(
+      `and(requester_id.eq.${userA},recipient_id.eq.${userB},status.eq.accepted),and(requester_id.eq.${userB},recipient_id.eq.${userA},status.eq.accepted)`
+    );
+
+  if (error) {
+    console.error("Error checking link status", error);
+    return false;
+  }
+
+  return data.length > 0;
+}
+
+export async function removeLink(userA: string, userB: string) {
+  const { error } = await supabase
+    .from("user_link_requests")
+    .delete()
+    .or(
+      `and(requester_id.eq.${userA},recipient_id.eq.${userB},status.eq.accepted),and(requester_id.eq.${userB},recipient_id.eq.${userA},status.eq.accepted)`
+    );
+
+  if (error) {
+    console.error("Error removing link", error);
+  }
+}
