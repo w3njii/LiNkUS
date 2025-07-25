@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SideBar from "../components/sidebar/SideBar";
 import { supabase } from "../App";
 import IncomingRequests from "../components/linking/IncomingRequests";
-import NotificationsFeed from "../components/notifications/NotificationFeed";
+import NotificationsFeed from "../components/Notifications/NotificationFeed";
 import "../styles/Notifications.css"
 
 function Notifications() {
