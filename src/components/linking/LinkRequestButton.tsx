@@ -6,6 +6,7 @@ import {
   getOutgoingRequests,
   getIncomingRequests,
 } from "./linking";
+import "../../styles/components/linking/LinkRequestButton.css"
 
 function LinkRequestButton({
   currentUserId,
@@ -61,23 +62,25 @@ function LinkRequestButton({
   if (loading) return <button disabled>Loading...</button>;
 
   return (
-    <button
-      onClick={handleClick}
-      disabled={status === "pending"}
-      className={`${
-        status === "linked"
-          ? "bg-red-500"
+    <div className="link-request-button-container">
+      <button
+        onClick={handleClick}
+        disabled={status === "pending"}
+        className={`link-request-button ${
+          status === "linked"
+            ? "link-request-linked"
+            : status === "pending"
+            ? "link-request-pending"
+            : "link-request-none"
+        }`}
+      >
+        {status === "linked"
+          ? "Remove Link"
           : status === "pending"
-          ? "bg-gray-400"
-          : "bg-blue-500"
-      } text-white px-4 py-2 rounded`}
-    >
-      {status === "linked"
-        ? "Remove Link"
-        : status === "pending"
-        ? "Pending"
-        : "Link Up"}
-    </button>
+          ? "Pending"
+          : "Link Up"}
+      </button>
+    </div>
   );
 }
 

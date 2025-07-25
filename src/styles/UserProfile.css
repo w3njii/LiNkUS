@@ -87,8 +87,9 @@
 }
 
 .user-profile-bio {
-    height: 80px;
+    height: auto;
     width: 600px;
+    padding-bottom: 15px;
 }
 
 .user-profile-courses-info-container {

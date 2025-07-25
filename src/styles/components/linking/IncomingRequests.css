@@ -3,9 +3,8 @@
     border-radius: 10px;
     border: 3px solid #000000;
     margin-top: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    height: 200px;
     overflow: auto;
+    height: auto;
   }
   
   .incoming-title {

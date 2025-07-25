@@ -28,7 +28,7 @@ function IncomingRequests({ currentUserId }: { currentUserId: string }) {
   if (requests.length > 0) {
     return (
       <div className="incoming-requests">
-        <h2 className="incoming-title">Incoming Requests</h2>
+        <h2 className="incoming-title">Incoming Link Requests</h2>
         {requests.map((req) => (
           <button
             className="request-card"
@@ -42,7 +42,7 @@ function IncomingRequests({ currentUserId }: { currentUserId: string }) {
               <button
                 className="accept-btn"
                 onClick={(e) => {
-                  e.stopPropagation(); // prevents parent button's onClick
+                  e.stopPropagation(); 
                   handleAccept(req.requester_id);
                 }}
               >
@@ -51,7 +51,7 @@ function IncomingRequests({ currentUserId }: { currentUserId: string }) {
               <button
                 className="reject-btn"
                 onClick={(e) => {
-                  e.stopPropagation(); // prevents parent button's onClick
+                  e.stopPropagation(); 
                   handleReject(req.requester_id);
                 }}
               >
