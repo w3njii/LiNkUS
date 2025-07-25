@@ -92,7 +92,7 @@ function UserProfileDisplay() {
         <div className="user-profile-display-back-button-container">
           <button
             className="user-profile-display-back-button"
-            onClick={() => navigate("/search")}
+            onClick={() => navigate(-1)}
           >
             Back
           </button>

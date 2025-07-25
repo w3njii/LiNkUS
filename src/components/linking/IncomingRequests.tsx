@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import {
-  getIncomingRequests,
-  acceptRequest,
-  rejectRequest,
-} from "./linking";
+import { getIncomingRequests, acceptRequest, rejectRequest } from "./linking";
+import { useNavigate } from "react-router-dom";
+import "../../styles/components/linking/IncomingRequests.css"
 
 function IncomingRequests({ currentUserId }: { currentUserId: string }) {
+  const navigate = useNavigate();
   const [requests, setRequests] = useState<any[]>([]);
 
   useEffect(() => {
@@ -15,8 +14,6 @@ function IncomingRequests({ currentUserId }: { currentUserId: string }) {
     };
     fetchRequests();
   }, []);
-
-  console.log(requests);
 
   const handleAccept = async (requesterId: string) => {
     await acceptRequest(requesterId, currentUserId);
@@ -28,18 +25,49 @@ function IncomingRequests({ currentUserId }: { currentUserId: string }) {
     setRequests((req) => req.filter((r) => r.requester_id !== requesterId));
   };
 
-  return (
-    <div>
-      <h2>Incoming Requests</h2>
-      {requests.map((req) => (
-        <div key={req.requester_id}>
-          <span>{req.requester_id}</span>
-          <button onClick={() => handleAccept(req.requester_id)}>Accept</button>
-          <button onClick={() => handleReject(req.requester_id)}>Reject</button>
-        </div>
-      ))}
-    </div>
-  );
+  if (requests.length > 0) {
+    return (
+      <div className="incoming-requests">
+        <h2 className="incoming-title">Incoming Requests</h2>
+        {requests.map((req) => (
+          <button
+            className="request-card"
+            key={req.requester_id}
+            onClick={() => navigate(`/user/${req.requester_id}`)}
+          >
+            <p className="request-user">
+              @{req.profiles?.username || "Unknown"}
+            </p>
+            <div className="request-actions">
+              <button
+                className="accept-btn"
+                onClick={(e) => {
+                  e.stopPropagation(); // prevents parent button's onClick
+                  handleAccept(req.requester_id);
+                }}
+              >
+                Accept
+              </button>
+              <button
+                className="reject-btn"
+                onClick={(e) => {
+                  e.stopPropagation(); // prevents parent button's onClick
+                  handleReject(req.requester_id);
+                }}
+              >
+                Reject
+              </button>
+            </div>
+          </button>
+        ))}
+      </div>
+    );
+  } else {
+    return (
+      <div>
+      </div>
+    );
+  }
 }
 
 export default IncomingRequests;

@@ -20,7 +20,13 @@ export async function sendLinkRequest(requesterId: string, recipientId: string) 
 export async function getIncomingRequests(userId: string) {
   return supabase
     .from("user_link_requests")
-    .select("requester_id, created_at")
+    .select(`
+      requester_id,
+      created_at,
+      profiles:requester_id (
+        username
+      )
+    `)
     .eq("recipient_id", userId)
     .eq("status", "pending");
 }

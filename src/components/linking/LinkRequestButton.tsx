@@ -4,6 +4,7 @@ import {
   removeLink,
   areUsersLinked,
   getOutgoingRequests,
+  getIncomingRequests,
 } from "./linking";
 
 function LinkRequestButton({
@@ -28,9 +29,8 @@ function LinkRequestButton({
       }
 
       const { data: outgoing } = await getOutgoingRequests(currentUserId);
-      const isPending = outgoing?.some(
-        (req) => req.recipient_id === otherUserId && req.status === "pending"
-      );
+      const {data: incoming } = await getIncomingRequests(currentUserId);
+      const isPending = outgoing?.some((req) => req.recipient_id === otherUserId && req.status === "pending") || incoming?.some((req) => req.requester_id === otherUserId)
 
       if (isPending) {
         setStatus("pending");

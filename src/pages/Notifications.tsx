@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import SideBar from "../components/sidebar/SideBar";
 import { supabase } from "../App";
 import IncomingRequests from "../components/linking/IncomingRequests";
-import NotificationsFeed from "../components/Notifications/NotificationFeed";
+import NotificationsFeed from "../components/notifications/NotificationFeed";
+import "../styles/Notifications.css"
 
 function Notifications() {
 
@@ -21,7 +22,7 @@ function Notifications() {
   }, []);
 
   return (
-    <div className="search-content">
+    <div className="notifications-content">
       <div className="sidebar-container">
         <SideBar />
       </div>
@@ -30,7 +31,7 @@ function Notifications() {
         {currentUserId && (
           <>
             <IncomingRequests currentUserId={currentUserId} />
-            <hr />
+            <br />
             <NotificationsFeed currentUserId={currentUserId} />
           </>
         )}
