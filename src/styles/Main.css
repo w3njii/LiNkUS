@@ -19,10 +19,13 @@
     width: 100%;
     align-content: flex-start;  
     gap: 20px;
-    justify-content: center;        
+    justify-content: center;     
+  }
+
+  .center-scroll-area::-webkit-scrollbar {
+    width: 0px;
   }
   
-
 .center-container {
     display: flex;
     flex-direction: column;
@@ -45,6 +48,4 @@
     width: 300px;
 }
 
-.discover-container {
-    overflow-y: auto;
-}
+

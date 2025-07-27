@@ -1,5 +1,27 @@
 .discover-container-in-discover {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.disover-heading-container {
+  height: 10vh;
+}
+
+.discover-grid {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  height: 90vh;
   overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  padding-top: 0;
+}
+
+.discover-grid::-webkit-scrollbar {
+  width: 0px;
 }
 
 .discover-heading {
@@ -10,9 +32,4 @@
   text-align: center;
 }
 
-.discover-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  align-items: stretch;
-}
+

@@ -4,6 +4,7 @@ export type Match = {
   user_id: string;
   name: string;
   username: string;
+  avatar_url: string;
   sharedCourses: string[];
   sharedInterests: string[];
   score: number;
@@ -33,7 +34,7 @@ export async function getMatchesForUser(currentUserId: string): Promise<Match[]>
 
   const { data: allProfiles, error: profileError } = await supabase
     .from("profiles")
-    .select("user_id, name, username");
+    .select("user_id, name, username, avatar_url");
 
   if (profileError || !allProfiles) {
     console.error("Error fetching profiles:", profileError);
@@ -71,6 +72,7 @@ export async function getMatchesForUser(currentUserId: string): Promise<Match[]>
         user_id: user.user_id,
         name: user.name,
         username: user.username,
+        avatar_url: user.avatar_url,
         sharedCourses,
         sharedInterests,
         score,

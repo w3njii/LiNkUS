@@ -19,11 +19,15 @@ export default function Discover({ currentUserId }: { currentUserId: string }) {
 
   return (
     <div className="discover-container-in-discover">
-      <h1 className="discover-heading">Discover Matches</h1>
-      <div className="discover-grid">
-        {matches.map((match) => (
-          <MatchCard key={match.user_id} match={match} />
-        ))}
+      <div className="disover-heading-container">
+        <h1 className="discover-heading">Discover</h1>
+      </div>
+      <div className="discover-grid-container">
+        <div className="discover-grid">
+          {matches.map((match) => (
+            <MatchCard key={match.user_id} match={match} />
+          ))}
+        </div>
       </div>
     </div>
   );

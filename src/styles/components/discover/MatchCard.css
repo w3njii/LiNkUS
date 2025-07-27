@@ -1,44 +1,104 @@
+.match-username-button {
+  border: none;
+  margin: none;
+  background: none;
+}
+
 .match-card {
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 1.25rem;
-    transition: box-shadow 0.3s ease;
-  }
+  border: none;
+  display: flex;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  height: 140px;
+  background-color: rgb(255, 233, 204);
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+}
   
-  .match-card:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .match-header {
-    margin-bottom: 0.5rem;
-  }
+.match-card:hover {
+  background-color: rgb(242, 216, 187);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-card-user-info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+
+.user-card-image-container-discover {
+  width: 70px;
+  height: 70px;
+}
+
+.user-avatar-in-discover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: burlywood;
+  border: 2px solid rgb(54, 16, 16);
+}
+
+.match-header {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0;
+  margin: 0;
+}
+
+.match-name {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 10px;
+  margin-bottom: 2px;
+}
   
   .match-username {
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
+    margin: 0 auto;
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+  } 
   
-  .match-name {
-    color: #4b5563; /* Tailwind gray-600 */
+  .match-common-information {
+    width: 60%;
+    height: 100%;
   }
-  
+
   .match-section {
-    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 46%;
   }
   
   .match-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+    font-weight: 550;
+    font-size: 15px;
+    margin: 0;
+    margin-bottom: 5px;
   }
-  
+
+  .match-things {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    text-align: center;
+  }
+
   .match-label.courses {
-    color: #2563eb; /* Tailwind blue-600 */
+    color: rgb(59, 59, 255);
   }
   
   .match-label.interests {
-    color: #16a34a; /* Tailwind green-600 */
+    color: green;
   }
   
   .match-list {
