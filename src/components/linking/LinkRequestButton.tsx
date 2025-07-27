@@ -15,7 +15,7 @@ function LinkRequestButton({
   currentUserId: string;
   otherUserId: string;
 }) {
-  const [status, setStatus] = useState<"none" | "linked" | "pending">("none");
+  const [status, setStatus] = useState<"none" | "linked" | "pending" | "cancel">("none");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,10 +31,15 @@ function LinkRequestButton({
 
       const { data: outgoing } = await getOutgoingRequests(currentUserId);
       const {data: incoming } = await getIncomingRequests(currentUserId);
-      const isPending = outgoing?.some((req) => req.recipient_id === otherUserId && req.status === "pending") || incoming?.some((req) => req.requester_id === otherUserId)
+      const isPending = incoming?.some((req) => req.requester_id === otherUserId)
+      const isCancellable = outgoing?.some(
+        (req) => req.recipient_id === otherUserId && req.status === "pending"
+      );
 
-      if (isPending) {
-        setStatus("pending");
+      if (isCancellable) {
+        setStatus("cancel");
+      } else if (isPending) {
+        setStatus("pending")
       } else {
         setStatus("none");
       }
@@ -46,7 +51,7 @@ function LinkRequestButton({
   }, [currentUserId, otherUserId]);
 
   const handleClick = async () => {
-    if (status === "linked") {
+    if (status === "linked" || status === "cancel") {
       await removeLink(currentUserId, otherUserId);
       setStatus("none");
     } else if (status === "none") {
@@ -54,7 +59,7 @@ function LinkRequestButton({
       if (error) {
         alert("Error sending request");
       } else {
-        setStatus("pending");
+        setStatus("cancel");
       }
     }
   };
@@ -71,6 +76,8 @@ function LinkRequestButton({
             ? "link-request-linked"
             : status === "pending"
             ? "link-request-pending"
+            : status === "cancel"
+            ? "link-request-cancel"
             : "link-request-none"
         }`}
       >
@@ -78,7 +85,9 @@ function LinkRequestButton({
           ? "Remove Link"
           : status === "pending"
           ? "Pending"
-          : "Link Up"}
+          : status === "cancel"
+          ? "Cancel Request"
+          : "Link"}
       </button>
     </div>
   );

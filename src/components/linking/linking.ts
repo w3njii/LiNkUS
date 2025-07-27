@@ -98,7 +98,7 @@ export async function removeLink(userA: string, userB: string) {
     .from("user_link_requests")
     .delete()
     .or(
-      `and(requester_id.eq.${userA},recipient_id.eq.${userB},status.eq.accepted),and(requester_id.eq.${userB},recipient_id.eq.${userA},status.eq.accepted)`
+      `and(requester_id.eq.${userA},recipient_id.eq.${userB}),and(requester_id.eq.${userB},recipient_id.eq.${userA})`
     );
 
   if (error) {
