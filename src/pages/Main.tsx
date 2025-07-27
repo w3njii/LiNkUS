@@ -3,12 +3,27 @@ import SideBar from "../components/sidebar/SideBar";
 import React, { useState, useEffect } from "react";
 import { Event } from "../Types";
 import LoadMoreButton from "../components/events/LoadMoreButton";
+import Discover from "../components/discover/Discover";
+import { supabase } from "../App";
 
 function Main() {
   const [events, setEvents] = useState<Event[]>([]);
   const [fileIndex, setFileIndex] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setCurrentUserId(user.id);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const fetchEvents = async (index: number) => {
     setIsLoading(true);
@@ -16,7 +31,7 @@ function Main() {
       const res = await fetch(`/data/events${index}.json`);
       if (!res.ok) throw new Error("File not found");
       const json = await res.json();
-      setEvents(prev => [...prev, ...json.data]);
+      setEvents((prev) => [...prev, ...json.data]);
     } catch (err) {
       console.warn(`events${index}.json not found`);
       setHasMore(false);
@@ -26,7 +41,7 @@ function Main() {
   };
 
   useEffect(() => {
-    fetchEvents(fileIndex); 
+    fetchEvents(fileIndex);
   }, []);
 
   const loadMore = () => {
@@ -55,18 +70,31 @@ function Main() {
                   <img
                     src={event.image_link}
                     alt={event.name}
-                    style={{ maxHeight: "60%", maxWidth: "100%", marginTop: "8px" }}
+                    style={{
+                      maxHeight: "60%",
+                      maxWidth: "100%",
+                      marginTop: "8px",
+                    }}
                   />
                 )}
               </div>
             ))
           )}
         </div>
-        {hasMore && <LoadMoreButton onClick={loadMore} isLoading={isLoading} hasMore={hasMore} />}
-        </div>
+        {hasMore && (
+          <LoadMoreButton
+            onClick={loadMore}
+            isLoading={isLoading}
+            hasMore={hasMore}
+          />
+        )}
+      </div>
       <div className="discover-container">
-        <p>Discover {"(not implemented yet)"}</p>
-        <div> </div>
+        {currentUserId ? (
+          <Discover currentUserId={currentUserId} />
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );
