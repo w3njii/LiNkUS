@@ -7,6 +7,10 @@
     height: auto;
   }
   
+  .incoming-requests::-webkit-scrollbar {
+    width: 0;
+  }
+  
   .incoming-title {
     font-size: 1.5rem;
     font-weight: 600;

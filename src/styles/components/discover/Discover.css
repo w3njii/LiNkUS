@@ -5,7 +5,8 @@
 }
 
 .disover-heading-container {
-  height: 10vh;
+  height: 9vh;
+  text-align: center;
 }
 
 .discover-grid {
@@ -25,11 +26,11 @@
 }
 
 .discover-heading {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 1.5rem;
   text-align: center;
+
 }
 
 

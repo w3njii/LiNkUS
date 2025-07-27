@@ -6,6 +6,10 @@
     height: 100%;
     overflow-y: auto;
 }
+
+.chat-list-container::-webkit-scrollbar {
+    width: 0;
+}
   
 .chat-items-container {
     display: flex;
