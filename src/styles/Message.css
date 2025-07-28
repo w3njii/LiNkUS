@@ -1,0 +1,64 @@
+.message-main {
+    display: flex;
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
+}
+
+.messages-content-container {
+    height: 100vh;
+    width: 70vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.message-main-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: 95%;
+    width: 92%;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.message-main-content-sidebar-container {
+    box-sizing: border-box;
+    width: 27%;
+    height: 100%;
+    border-right: 2px solid gray;
+}
+  
+.message-main-content-input-container {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 73%;
+    height: 100%;
+}
+
+.messaging-selected-friend-top-part {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid gray;
+}
+
+.user-profile-picture-in-messaging  {
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.messaging-selected-friend-name {
+    padding-bottom: 15px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    margin-left: -10px;
+}
+

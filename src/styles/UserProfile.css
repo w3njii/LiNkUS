@@ -1,0 +1,205 @@
+.profile-content {
+    display: flex;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    width: 244px;
+    text-align: center;
+    border-right: 1px solid grey;
+}
+
+.user-profile-edit-profile-container {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px;
+    height: 2%;
+}
+
+.user-profile-edit-profile-button {
+    font-weight: 570;
+    background-color: rgb(241, 226, 205);
+    cursor: pointer;
+    height: 30px;
+    width: 130px;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.user-profile-edit-profile-button:hover {
+    background-color: rgb(228, 204, 175);
+}
+
+.user-profile-top-content {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 25%;
+    margin-bottom: 30px;
+    padding-left: 40px;
+}
+
+.user-profile-container {
+    width: 81%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.profile-picture-container-user-profile {
+    width: 200px;
+    height: 200px;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.user-profile-picture {
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-profile-info-container {
+    font-weight: 650;
+    margin-top: 12px;
+}
+
+.user-profile-name-container {
+    margin-bottom: 5px;
+    font-size: 25px;
+}
+
+.user-profile-username-container {
+    font-size: 22px;
+}
+
+.user-profile-links-number {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.user-profile-bio {
+    height: auto;
+    width: 600px;
+    padding-bottom: 15px;
+}
+
+.user-profile-courses-info-container {
+    width: 100%;
+}
+
+.user-profile-bottom-content {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid gray;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.user-profile-bottom-content h1 {
+    font-size: 22px;
+    padding: 0;
+    margin: 0;
+    font-weight: 650;
+}
+
+.user-profile-bio {
+    line-height: 1.2;
+    font-weight: 550;
+}
+
+.user-profile-courses-info {
+    height: 50%;
+    margin-top: 20px;
+}
+
+.courses-list-user-profile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 30px;
+    padding-top: 13px;
+    column-gap: 10px;
+    font-size: 20px;
+    overflow-y: auto;
+    height: 90%;
+  }
+
+.courses-list-user-profile div {
+    margin-bottom: 3px;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 500px;
+}
+
+.user-profile-interests-info {
+    height: 50%;
+    margin-top: 30px;
+}
+
+.user-profile-display-back-button-container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    height: 2%;
+}
+
+.user-profile-display-back-button {
+    font-weight: 570;
+    background-color: rgb(241, 226, 205);
+    cursor: pointer;
+    height: 30px;
+    width: 130px;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.user-profile-display-back-button:hover {
+    background-color: rgb(228, 204, 175);
+}
+
+.link-button-and-message-button-container {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    gap: 10px;
+}
+
+
+.link-button-container {
+    height: min-content;
+}
+
+.message-button-container {
+}
+
+  
+  .message-user-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .message-user-button:hover {
+    background-color: rgb(0, 101, 0);
+  }

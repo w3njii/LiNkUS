@@ -1,0 +1,50 @@
+.link-request-button-container {
+  margin: 0 auto;
+}
+
+.link-request-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.2s ease;
+  }
+  
+  .link-request-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  /* State: Not linked */
+  .link-request-none {
+    background-color: #3b82f6; /* blue-500 */
+  }
+  
+  .link-request-none:hover:not(:disabled) {
+    background-color: #2563eb; 
+  }
+  
+  /* State: Pending */
+  .link-request-pending {
+    background-color: #9ca3af; 
+  }
+  
+  /* State: Linked */
+  .link-request-linked {
+    background-color: rgb(211, 18, 18); 
+  }
+  
+  .link-request-linked:hover:not(:disabled) {
+    background-color: #b01414; 
+  }
+  
+  /* State: Cancel (cancel a sent request) */
+.link-request-cancel {
+  background-color: rgb(230, 37, 37);
+}
+
+.link-request-cancel:hover:not(:disabled) {
+  background-color: #bd1815; 
+}
