@@ -41,11 +41,11 @@ export default function NotificationsFeed({
 
     switch (n.type) {
       case "incoming_request":
-        return `You received a link request from ${username}`;
+        return `You received a link request from @${username}`;
       case "accepted":
-        return `${username} accepted your request`;
+        return `@${username} accepted your request`;
       case "rejected":
-        return `${username} rejected your request`;
+        return `@${username} rejected your request`;
       default:
         return "Unknown notification type";
     }
