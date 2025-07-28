@@ -1,4 +1,5 @@
 import { supabase } from "../../App";
+import { areUsersLinked } from "../linking/linking";
 
 export type Match = {
   user_id: string;
@@ -46,6 +47,9 @@ export async function getMatchesForUser(currentUserId: string): Promise<Match[]>
   const matches: Match[] = [];
 
   for (const user of otherUsers) {
+    const alreadyLinked = await areUsersLinked(currentUserId, user.user_id);
+    if (alreadyLinked) continue;
+    
     const [ucRes, uiRes] = await Promise.all([
       supabase
         .from("user_courses")

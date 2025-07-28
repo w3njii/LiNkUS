@@ -3,6 +3,17 @@ import Search from "./MessageSearch";
 import { Friend, ChatListProps } from "../../Types";
 import { supabase } from "../../App";
 import "../../styles/components/message/ChatList.css";
+import { areUsersLinked } from "../linking/linking";
+
+const filterLinkedUsers = async (users: Friend[], currentUserId: string) => {
+  const checks = await Promise.all(
+    users.map(async (user) => {
+      const linked = await areUsersLinked(currentUserId, user.id);
+      return linked ? user : null;
+    })
+  );
+  return checks.filter((u): u is Friend => u !== null);
+};
 
 function ChatList({
   onSelect,
@@ -16,41 +27,42 @@ function ChatList({
     setSearch(term);
 
     if (term.trim().length === 0) {
-      setMergedList(friends);
+      const linkedFriends = await filterLinkedUsers(friends, currentUserId);
+      setMergedList(linkedFriends);
       return;
     }
 
     const { data: profiles, error } = await supabase
       .from("profiles")
-      .select("user_id, username, avatar_url")
+      .select("user_id, username, name, avatar_url")
       .ilike("username", `${term}%`)
       .neq("user_id", currentUserId);
 
     if (profiles) {
-      const existingIds = new Set(friends.map((f) => f.id));
-      const newUsers = profiles
-        .filter((u) => !existingIds.has(u.user_id))
-        .map((u) => {
-          const maybeFriend = friends.find((f) => f.id === u.user_id);
-          return {
-            id: u.user_id,
-            username: u.username,
-            avatar_url: u.avatar_url,
-            lastMessage: maybeFriend?.lastMessage ?? null,
-          };
-        });
+      const allCandidates: Friend[] = profiles.map((u) => {
+        const maybeFriend = friends.find((f) => f.id === u.user_id);
+        return {
+          id: u.user_id,
+          username: u.username,
+          avatar_url: u.avatar_url,
+          lastMessage: maybeFriend?.lastMessage ?? null,
+        };
+      });
 
-      const matchingFriends = friends.filter((f) =>
-        (f.username ?? "").toLowerCase().startsWith(term.toLowerCase())
-      );
-
-      setMergedList([...matchingFriends, ...newUsers]);
+      const linkedUsers = await filterLinkedUsers(allCandidates, currentUserId);
+      setMergedList(linkedUsers);
     }
   };
 
   useEffect(() => {
-    setMergedList(friends);
-  }, [friends]);
+    const filterOnLoad = async () => {
+      const linkedFriends = await filterLinkedUsers(friends, currentUserId);
+      setMergedList(linkedFriends);
+    };
+    if (currentUserId) {
+      filterOnLoad();
+    }
+  }, [friends, currentUserId]);
 
   return (
     <div className="chat-list-container">
@@ -72,7 +84,7 @@ function ChatList({
         ))}
       </div>
     </div>
-  );  
+  );
 }
 
 export default ChatList;

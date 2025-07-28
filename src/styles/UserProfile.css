@@ -172,3 +172,34 @@
 .user-profile-display-back-button:hover {
     background-color: rgb(228, 204, 175);
 }
+
+.link-button-and-message-button-container {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    gap: 10px;
+}
+
+
+.link-button-container {
+    height: min-content;
+}
+
+.message-button-container {
+}
+
+  
+  .message-user-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .message-user-button:hover {
+    background-color: rgb(0, 101, 0);
+  }

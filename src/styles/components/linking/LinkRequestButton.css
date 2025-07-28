@@ -23,28 +23,28 @@
   }
   
   .link-request-none:hover:not(:disabled) {
-    background-color: #2563eb; /* blue-600 */
+    background-color: #2563eb; 
   }
   
   /* State: Pending */
   .link-request-pending {
-    background-color: #9ca3af; /* gray-400 */
+    background-color: #9ca3af; 
   }
   
   /* State: Linked */
   .link-request-linked {
-    background-color: #ef4444; /* red-500 */
+    background-color: rgb(211, 18, 18); 
   }
   
   .link-request-linked:hover:not(:disabled) {
-    background-color: #dc2626; /* red-600 */
+    background-color: #b01414; 
   }
   
   /* State: Cancel (cancel a sent request) */
 .link-request-cancel {
-  background-color: #f5320b; /* amber-500 */
+  background-color: rgb(230, 37, 37);
 }
 
 .link-request-cancel:hover:not(:disabled) {
-  background-color: #dc0e0b; /* amber-600 */
+  background-color: #bd1815; 
 }

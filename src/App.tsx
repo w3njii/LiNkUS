@@ -130,6 +130,10 @@ function AppWrapper() {
           <Route path="/search" element={<Search />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/user/:userId" element={<UserProfileDisplay />} />
+          <Route
+            path="/message/:userId"
+            element={<Message user={session?.user} />}
+          />
         </>
       )}
     </Routes>

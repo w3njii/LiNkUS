@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/UserProfile.css";
 import LinkRequestButton from "../linking/LinkRequestButton";
 import { getAcceptedLinks } from "../linking/linking";
+import { areUsersLinked } from "../linking/linking";
 
 function UserProfileDisplay() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function UserProfileDisplay() {
   const [interests, setInterests] = useState<string[]>([]);
   const [currentUserId, setCurrentUserId] = useState<string>("");
   const [linksCount, setLinksCount] = useState<number>(0);
+  const [isLinked, setIsLinked] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -82,6 +84,17 @@ function UserProfileDisplay() {
     fetchLinks();
   }, [userId]);
 
+  useEffect(() => {
+    const checkLinkStatus = async () => {
+      if (currentUserId && userId && currentUserId !== userId) {
+        const linked = await areUsersLinked(currentUserId, userId);
+        setIsLinked(linked);
+      }
+    };
+
+    checkLinkStatus();
+  }, [currentUserId, userId]);
+
   if (!profile) return <div></div>;
   return (
     <div className="profile-content">
@@ -121,13 +134,25 @@ function UserProfileDisplay() {
               </span>
             </div>
             <div className="user-profile-bio">{profile.bio}</div>
-            <div className="link-button-container">
-              {currentUserId && userId && (
-                <LinkRequestButton
-                  currentUserId={currentUserId}
-                  otherUserId={userId}
-                />
-              )}
+            <div className="link-button-and-message-button-container">
+              <div className="link-button-container">
+                {currentUserId && userId && (
+                  <LinkRequestButton
+                    currentUserId={currentUserId}
+                    otherUserId={userId}
+                  />
+                )}
+              </div>
+              <div className="message-button-container">
+                {isLinked && (
+                    <button
+                      className="message-user-button"
+                      onClick={() => navigate(`/message/${userId}`)}
+                    >
+                      Message
+                    </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
