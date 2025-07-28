@@ -48,11 +48,13 @@ export interface UserProfileProps {
 
 
 export interface Event {
-  id: number;
-  name: string;
-  start_date: string;
-  mode: string | null;
-  image_link: string | null;
+  id: string;
+  title: string;
+  start_time: string;
+  location: string;
+  description: string;
+  image_url: string;
+  event_url: string;
 }
 
 export interface IUserProfileDisplay {
