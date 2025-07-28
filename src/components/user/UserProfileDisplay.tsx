@@ -18,6 +18,8 @@ function UserProfileDisplay() {
   const [currentUserId, setCurrentUserId] = useState<string>("");
   const [linksCount, setLinksCount] = useState<number>(0);
   const [isLinked, setIsLinked] = useState(false);
+  const [linkStatusChanged, setLinkStatusChanged] = useState(false);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -82,7 +84,7 @@ function UserProfileDisplay() {
     };
 
     fetchLinks();
-  }, [userId]);
+  }, [userId, linkStatusChanged]);
 
   useEffect(() => {
     const checkLinkStatus = async () => {
@@ -93,8 +95,8 @@ function UserProfileDisplay() {
     };
 
     checkLinkStatus();
-  }, [currentUserId, userId]);
-
+  }, [currentUserId, userId, linkStatusChanged]);
+  
   if (!profile) return <div></div>;
   return (
     <div className="profile-content">
@@ -140,17 +142,18 @@ function UserProfileDisplay() {
                   <LinkRequestButton
                     currentUserId={currentUserId}
                     otherUserId={userId}
+                    onStatusChange={() => setLinkStatusChanged((prev) => !prev)}
                   />
                 )}
               </div>
               <div className="message-button-container">
                 {isLinked && (
-                    <button
-                      className="message-user-button"
-                      onClick={() => navigate(`/message/${userId}`)}
-                    >
-                      Message
-                    </button>
+                  <button
+                    className="message-user-button"
+                    onClick={() => navigate(`/message/${userId}`)}
+                  >
+                    Message
+                  </button>
                 )}
               </div>
             </div>

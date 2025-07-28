@@ -11,11 +11,15 @@ import "../../styles/components/linking/LinkRequestButton.css"
 function LinkRequestButton({
   currentUserId,
   otherUserId,
+  onStatusChange,
 }: {
   currentUserId: string;
   otherUserId: string;
+  onStatusChange?: () => void;
 }) {
-  const [status, setStatus] = useState<"none" | "linked" | "pending" | "cancel">("none");
+  const [status, setStatus] = useState<
+    "none" | "linked" | "pending" | "cancel"
+  >("none");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,8 +34,10 @@ function LinkRequestButton({
       }
 
       const { data: outgoing } = await getOutgoingRequests(currentUserId);
-      const {data: incoming } = await getIncomingRequests(currentUserId);
-      const isPending = incoming?.some((req) => req.requester_id === otherUserId)
+      const { data: incoming } = await getIncomingRequests(currentUserId);
+      const isPending = incoming?.some(
+        (req) => req.requester_id === otherUserId
+      );
       const isCancellable = outgoing?.some(
         (req) => req.recipient_id === otherUserId && req.status === "pending"
       );
@@ -39,7 +45,7 @@ function LinkRequestButton({
       if (isCancellable) {
         setStatus("cancel");
       } else if (isPending) {
-        setStatus("pending")
+        setStatus("pending");
       } else {
         setStatus("none");
       }
@@ -62,6 +68,8 @@ function LinkRequestButton({
         setStatus("cancel");
       }
     }
+
+    if (onStatusChange) onStatusChange();
   };
 
   if (loading) return <button disabled>Loading...</button>;
@@ -94,3 +102,4 @@ function LinkRequestButton({
 }
 
 export default LinkRequestButton;
+
