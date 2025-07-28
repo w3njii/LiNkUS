@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "backend/scraper.ts"  ]
+, "backend/scraper.ts", "src/components/events/scraper.ts"  ]
 }
