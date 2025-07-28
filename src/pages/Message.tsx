@@ -6,6 +6,7 @@ import MessageInput from "../components/message/MessageInput";
 import SideBar from "../components/sidebar/SideBar";
 import "../styles/Message.css";
 import { useParams } from "react-router-dom";
+import { SelectContainer } from "react-select/dist/declarations/src/components/containers";
 
 interface MainProps {
   user: Session["user"];
@@ -35,6 +36,7 @@ function Message({ user }: MainProps) {
         setFriendName("");
       } else if (data) {
         setFriendName(data.name);
+        setAvatarUrl(data.avatar_url);
       }
     };
 
@@ -60,7 +62,16 @@ function Message({ user }: MainProps) {
           <div className="message-main-content-input-container">
             {selectedFriend ? (
               <>
-                <h2 className="messaging-selected-friend-name">{friendName}</h2>
+                <div className="messaging-selected-friend-top-part">
+                  <img
+                    src={avatarUrl || "/images/default_user_image.png"}
+                    alt={`${selectedFriend}'s avatar`}
+                    className="user-profile-picture-in-messaging"
+                  />
+                  <h2 className="messaging-selected-friend-name">
+                    {friendName}
+                  </h2>
+                </div>
                 <MessageInput recipientId={selectedFriend} />
               </>
             ) : (

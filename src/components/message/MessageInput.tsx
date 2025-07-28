@@ -139,8 +139,27 @@ function MessageInput({
     return (
       <div className="message-input-container">
         <div className="message-log">
-          <p style={{ color: "rgb(0, 0, 0)", textAlign: "center", paddingTop: "100px" }}>
+          <p
+            style={{
+              color: "rgb(0, 0, 0)",
+              textAlign: "center",
+              paddingTop: "100px",
+              fontSize: "16px",
+              margin: "0"
+            }}
+          >
             Select a conversation or search for a user to start chatting
+          </p>
+          <p
+            style={{
+              color: "rgb(0, 0, 0)",
+              textAlign: "center",
+              paddingTop: "0",
+              fontSize: "14px",
+              margin: "0"
+            }}
+          >
+            (Only linked users will appear in search results)
           </p>
         </div>
       </div>

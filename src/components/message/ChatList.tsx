@@ -35,7 +35,7 @@ function ChatList({
     const { data: profiles, error } = await supabase
       .from("profiles")
       .select("user_id, username, name, avatar_url")
-      .ilike("username", `${term}%`)
+      .or(`username.ilike.${term}%,name.ilike.${term}%`)
       .neq("user_id", currentUserId);
 
     if (profiles) {
@@ -45,6 +45,7 @@ function ChatList({
           id: u.user_id,
           username: u.username,
           avatar_url: u.avatar_url,
+          name: u.name,
           lastMessage: maybeFriend?.lastMessage ?? null,
         };
       });
@@ -55,14 +56,37 @@ function ChatList({
   };
 
   useEffect(() => {
-    const filterOnLoad = async () => {
-      const linkedFriends = await filterLinkedUsers(friends, currentUserId);
-      setMergedList(linkedFriends);
+    const fetchLinkedUsers = async () => {
+      if (!currentUserId) return;
+
+      const { data: allProfiles, error } = await supabase
+        .from("profiles")
+        .select("user_id, username, name, avatar_url")
+        .neq("user_id", currentUserId);
+
+      if (error) {
+        console.error("Error fetching profiles:", error.message);
+        return;
+      }
+
+      const allCandidates: Friend[] = allProfiles.map((u) => {
+        const maybeFriend = friends.find((f) => f.id === u.user_id);
+        return {
+          id: u.user_id,
+          username: u.username,
+          name: u.name,
+          avatar_url: u.avatar_url,
+          lastMessage: maybeFriend?.lastMessage ?? null,
+        };
+      });
+
+      const linked = await filterLinkedUsers(allCandidates, currentUserId);
+      const withRecentChats = linked.filter((user) => user.lastMessage != null);
+      setMergedList(withRecentChats);
     };
-    if (currentUserId) {
-      filterOnLoad();
-    }
-  }, [friends, currentUserId]);
+
+    fetchLinkedUsers();
+  }, [currentUserId, friends]);
 
   return (
     <div className="chat-list-container">
@@ -74,11 +98,20 @@ function ChatList({
             className="chat-item"
             onClick={() => onSelect(friend.id)}
           >
-            <div className="chat-username">{friend.username}</div>
-            <div className="chat-message">
-              {friend.lastMessage ?? (
-                <span className="new-convo">(New conversation)</span>
-              )}
+            <img
+              src={friend.avatar_url || "/images/default_user_image.png"}
+              alt={`${friend.username}'s avatar`}
+              className="user-profile-picture-in-chatlist"
+            />
+            <div className="chatlist-user-card-chat-information">
+              <div className="chat-name">{friend.name}</div>
+              <div className="chat-username">@{friend.username}</div>
+
+              <div className="chat-message">
+                {friend.lastMessage ?? (
+                  <span className="new-convo">(New conversation)</span>
+                )}
+              </div>
             </div>
           </div>
         ))}

@@ -11,6 +11,8 @@ export interface Message {
 export type Friend = {
   id: string;
   username: string;
+  name: string;
+  avatar_url: string | null;
   lastMessage: string | null;
 };
   
@@ -32,6 +34,7 @@ export interface ChatListProps {
 export type RecentChatRow = {
   friend_id: string;
   friend_username: string;
+  friend_name: string;
   friend_avatar_url: string | null;
   last_message: string;
 };

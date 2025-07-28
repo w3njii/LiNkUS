@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../App";
 import "../../styles/components/notifications/NotificationFeed.css"
+import { useNavigate } from "react-router-dom";
 
 type Notification = {
   id: string;
@@ -19,6 +20,7 @@ export default function NotificationsFeed({
   currentUserId: string;
 }) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -58,10 +60,15 @@ export default function NotificationsFeed({
         ) : (
           notifications.map((n) => (
             <div className="notification-card" key={n.id}>
-              <p className="notification-message">{getMessage(n)}</p>
-              <small className="notification-time">
-                {new Date(n.created_at).toLocaleString()}
-              </small>
+              <button
+                className="notification-card-button"
+                onClick={() => navigate(`/user/${n.from_user_id}`)}
+              >
+                <p className="notification-message">{getMessage(n)}</p>
+                <small className="notification-time">
+                  {new Date(n.created_at).toLocaleString()}
+                </small>
+              </button>
             </div>
           ))
         )}

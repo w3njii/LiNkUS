@@ -5,13 +5,16 @@ import "../../styles/components/discover/Discover.css";
 
 export default function Discover({ currentUserId }: { currentUserId: string }) {
   const [matches, setMatches] = useState<Match[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchMatches = async () => {
+      setLoading(true);
       console.log("Fetching matches for:", currentUserId);
       const result = await getMatchesForUser(currentUserId);
       console.log("Matching result:", result);
       setMatches(result);
+      setLoading(false);
     };
 
     fetchMatches();
@@ -23,11 +26,19 @@ export default function Discover({ currentUserId }: { currentUserId: string }) {
         <h1 className="discover-heading">Discover</h1>
       </div>
       <div className="discover-grid-container">
-        <div className="discover-grid">
-          {matches.map((match) => (
-            <MatchCard key={match.user_id} match={match} />
-          ))}
-        </div>
+        {matches.length > 0 && !loading ? (
+          <div className="discover-grid">
+            {matches.map((match) => (
+              <MatchCard key={match.user_id} match={match} />
+            ))}
+          </div>
+        ) : loading ? (
+          <p>Searching for matches...</p>
+        ) : (
+          <div>
+            <p>(No matches found)</p>
+          </div>
+        )}
       </div>
     </div>
   );
