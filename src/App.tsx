@@ -104,7 +104,7 @@ function AppWrapper() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //useAutoLogoutTimer(session);
+  useAutoLogoutTimer(session);
 
   if (loading) {
     return <div>Loading...</div>;

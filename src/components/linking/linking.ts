@@ -2,18 +2,17 @@ import { supabase } from "../../App";
 
 // Send a request
 export async function sendLinkRequest(requesterId: string, recipientId: string) {
-  const { data, error } = await supabase.from("user_link_requests").upsert({
-    requester_id: requesterId,
-    recipient_id: recipientId,
-    status: "pending",
-  });
-
   await supabase.from("notifications").insert({
     user_id: recipientId,
     type: "incoming_request",
     from_user_id: requesterId,
   });
-  return { data, error };
+
+  return supabase.from("user_link_requests").upsert({
+    requester_id: requesterId,
+    recipient_id: recipientId,
+    status: "pending",
+  });
 }
 
 // Get incoming requests
@@ -77,6 +76,7 @@ export async function getAcceptedLinks(userId: string) {
     );
 }
 
+// Check if users are linked
 export async function areUsersLinked(userA: string, userB: string) {
   const { data, error } = await supabase
     .from("user_link_requests")
@@ -93,6 +93,7 @@ export async function areUsersLinked(userA: string, userB: string) {
   return data.length > 0;
 }
 
+// Remove link between two users
 export async function removeLink(userA: string, userB: string) {
   const { error } = await supabase
     .from("user_link_requests")
