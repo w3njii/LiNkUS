@@ -82,32 +82,3 @@ function MessageSidebar({
 
 export default MessageSidebar;
 
-/*
-select
-m.id as message_id,
-case
-  when m.user_id = uid then m.recipient_id
-  else m.user_id
-end as friend_id,
-p.username as friend_username,
-p.avatar_url as friend_avatar_url,
-m.content as last_message,
-m.created_at as sent_at
-from (
-select distinct on (
-  least(user_id, recipient_id),
-  greatest(user_id, recipient_id)
-) *
-from messages
-where user_id = uid or recipient_id = uid
-order by
-  least(user_id, recipient_id),
-  greatest(user_id, recipient_id),
-  created_at desc
-) m
-join profiles p
-on p.user_id = case
-            when m.user_id = uid then m.recipient_id
-            else m.user_id
-          end
-*/

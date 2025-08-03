@@ -9,14 +9,14 @@
   display: flex;
   border-radius: 12px;
   padding: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   height: 140px;
   background-color: rgb(255, 233, 204);
   justify-content: center;
   align-items: center;
   column-gap: 10px;
 }
-  
+
 .match-card:hover {
   background-color: rgb(242, 216, 187);
   cursor: pointer;
@@ -58,53 +58,52 @@
   margin: 10px;
   margin-bottom: 2px;
 }
-  
-  .match-username {
-    margin: 0 auto;
-    color: black;
-    font-weight: 400;
-    font-size: 12px;
-  } 
-  
-  .match-common-information {
-    width: 60%;
-    height: 100%;
-  }
 
-  .match-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 46%;
-  }
-  
-  .match-label {
-    font-weight: 550;
-    font-size: 15px;
-    margin: 0;
-    margin-bottom: 5px;
-  }
+.match-username {
+  margin: 0 auto;
+  color: black;
+  font-weight: 400;
+  font-size: 12px;
+}
 
-  .match-things {
-    margin: 0;
-    padding: 0;
-    font-size: 13px;
-    text-align: center;
-  }
+.match-common-information {
+  width: 60%;
+  height: 100%;
+}
 
-  .match-label.courses {
-    color: rgb(59, 59, 255);
-  }
-  
-  .match-label.interests {
-    color: green;
-  }
-  
-  .match-list {
-    padding-left: 1.25rem;
-    font-size: 0.875rem;
-    color: #374151; /* Tailwind gray-800 */
-    list-style-type: disc;
-  }
-  
+.match-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 46%;
+}
+
+.match-label {
+  font-weight: 550;
+  font-size: 15px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.match-things {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  text-align: center;
+}
+
+.match-label.courses {
+  color: rgb(59, 59, 255);
+}
+
+.match-label.interests {
+  color: green;
+}
+
+.match-list {
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+  color: #374151;
+  list-style-type: disc;
+}

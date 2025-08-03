@@ -1,14 +1,14 @@
 .notifications-content {
-    display: flex;
-    box-sizing: border-box;
-    height: 100vh;
+  display: flex;
+  box-sizing: border-box;
+  height: 100vh;
 }
 
 .notifications-main {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  overflow-y: auto;
 }

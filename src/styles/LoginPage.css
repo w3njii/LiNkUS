@@ -1,54 +1,54 @@
 .login-text {
-    text-align: center;
-    padding-bottom: 10px;
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 .box {
-    min-width: 350px;
-    border: 3px solid black;
-    padding: 30px;
-    border-radius: 7px;
+  min-width: 350px;
+  border: 3px solid black;
+  padding: 30px;
+  border-radius: 7px;
 }
 
 .login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 95vh;
 }
 
 .auth button {
-    border-radius: 10px;
-    border: 2px solid rgb(0, 0, 0);
-    height: 35px;
+  border-radius: 10px;
+  border: 2px solid rgb(0, 0, 0);
+  height: 35px;
 }
 
 .auth button:hover {
-    background-color: rgb(225, 199, 170) !important;
+  background-color: rgb(225, 199, 170) !important;
 }
-  
+
 .auth input {
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 10px;
-    height: 35px;
-    padding: 5px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  height: 35px;
+  padding: 5px;
 }
 
 .auth .sbui-auth-view {
-    gap: 12px !important;
+  gap: 12px !important;
 }
 
 .auth .supabase-auth-ui_ui-divider {
-    height: 0px;
+  height: 0px;
 }
 
 .logo {
-    max-width: 300px;
-    padding-right: 190px;
+  max-width: 300px;
+  padding-right: 190px;
 }
 
-@media screen and (max-width:900px) {
-    .logo {
-        display: none;
-    }
+@media screen and (max-width: 900px) {
+  .logo {
+    display: none;
+  }
 }

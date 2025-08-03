@@ -1,20 +1,20 @@
 .logout {
-    display: flex;
-    font-weight: 570;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(241, 226, 205);
-    text-align: center;
-    cursor: pointer;
-    width: 90%;
-    height: 40px;
-    font-size: 20px;
-    border: none;
-    border-radius: 10px;
-    margin: 0 auto;
-    transition: background-color 0.2s ease;
+  display: flex;
+  font-weight: 570;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(241, 226, 205);
+  text-align: center;
+  cursor: pointer;
+  width: 90%;
+  height: 40px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  margin: 0 auto;
+  transition: background-color 0.2s ease;
 }
 
-.logout:hover{
-    background-color: rgb(228, 204, 175);
+.logout:hover {
+  background-color: rgb(228, 204, 175);
 }
